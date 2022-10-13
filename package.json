@@ -1,0 +1,26 @@
+{
+  "name": "sally-weather-bot",
+  "version": "1.0.0",
+  "description": "Sally Weather System Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SallyWS14/Sally-Weather-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SallyWS14/Sally-Weather-Bot/issues"
+  },
+  "homepage": "https://github.com/SallyWS14/Sally-Weather-Bot#readme",
+  "dependencies": {
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0"
+  }
+}

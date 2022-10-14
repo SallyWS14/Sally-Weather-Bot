@@ -6,6 +6,6 @@ module.exports = {
 		.setDescription('Replies with Pong!'),
 	async execute(interaction) {
 		let x = 2+2
-        await interaction.reply('Pong!' + x);
+        await interaction.reply({content: `Pong! ${x}`, ephemeral: true});
 	},
 };

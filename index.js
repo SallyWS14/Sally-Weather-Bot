@@ -12,7 +12,8 @@ for (const file of eventFiles) {
 	const event = require(filePath);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
-	} else {
+	}
+	else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
@@ -25,7 +26,7 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
-	commands.push(command.data.toJSON());
+	command.push(command.data.toJSON());
 }
 client.once('ready', () => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
@@ -33,18 +34,19 @@ client.once('ready', () => {
 
 client.on('interactionCreate', async interaction => {
 	console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
-	
-    if (!interaction.isChatInputCommand()) return;
 
-    const command = interaction.client.commands.get(interaction.commandName);
+	if (!interaction.isChatInputCommand()) return;
 
-	if (!command) { 
-        return;
-    }
+	const command = interaction.client.commands.get(interaction.commandName);
 
-    try {
+	if (!command) {
+		return;
+	}
+
+	try {
 		await command.execute(interaction);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}

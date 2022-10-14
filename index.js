@@ -4,6 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -26,30 +27,15 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
-	command.push(command.data.toJSON());
+	client.commands.set(command.data.name, command);
 }
-client.once('ready', () => {
-	console.log(`Ready! Logged in as ${c.user.tag}`);
-});
 
-client.on('interactionCreate', async interaction => {
-	console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
+// client.once('ready', c => {
+// 	console.log(`Ready! Logged in as ${c.user.tag}`);
+// });
 
-	if (!interaction.isChatInputCommand()) return;
-
-	const command = interaction.client.commands.get(interaction.commandName);
-
-	if (!command) {
-		return;
-	}
-
-	try {
-		await command.execute(interaction);
-	}
-	catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
-});
+// client.on('interactionCreate', async interaction => {
+// 	console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
+// });
 
 client.login(token);

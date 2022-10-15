@@ -1,0 +1,18 @@
+{
+    "servers": {
+        "serveId": {
+            {
+                "userId": {
+                    "location": "[user location]"
+                } 
+            },
+            {
+                "userId": {
+                    "location": "[user location]"
+                }
+            }
+        },
+    }
+}
+
+test.servers["serverId"].["userId"].location

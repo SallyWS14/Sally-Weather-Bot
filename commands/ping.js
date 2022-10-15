@@ -5,7 +5,7 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
 	async execute(interaction) {
-		let x = 2+2
+		let x = 2 + 2;
         await interaction.reply({content: `Pong! ${x}`, ephemeral: true});
 	},
 };

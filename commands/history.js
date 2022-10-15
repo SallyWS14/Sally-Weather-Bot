@@ -16,13 +16,17 @@ module.exports = {
 		const optionsGet = {
 			host: 'api.weatherapi.com',
 			port: 0,
-			path: encodeURIComponent(`/v1/history.json?key=${process.env.CLEMENT_WAPIKEY}&q=${location}&dt=${idate} ${itime}`),
+			path: `/v1/history.json?key=${process.env.CLEMENT_WAPIKEY}&q=${location}&dt=${idate} ${itime}`,
 			method: 'GET',
 		};
-		const reqGet = https.request(optionsGet, (res) => {
-			console.log(res.data);
+		const reqGet = https.request(`https://api.weatherapi.com/v1/history.json?key=${process.env.CLEMENT_WAPIKEY}&q=${location}&dt=${idate} ${itime}`, (res) => {
+			console.log('===============================');
+			console.log(res);
+			console.log('===============================');
 			console.log(res.statusCode);
+			console.log('===============================');
 			console.log(res.statusMessage);
+			console.log('===============================');
 			res.on('data', async (d) => {
 				console.log(d);
 			});

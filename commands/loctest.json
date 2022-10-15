@@ -1,1 +1,12 @@
-{"table":[{"guild":"guild id","user":"user id","loc":"location"},{"guild_id":"807460348361703424","user_tag":"EthanH#6948","location":"kelowna"}]}
+[
+    {
+        "guild_id": "guild id",
+        "user_tag": "user id",
+        "location": "location"
+    },
+    {
+        "guild_id": "807460348361703424",
+        "user_tag": "EthanH#6948",
+        "location": "kelowna"
+    }
+]

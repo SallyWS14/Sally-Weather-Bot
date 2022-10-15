@@ -17,5 +17,9 @@ for (const file of commandFiles) {
 }
 
 rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-	.then(data => console.log(`Successfully registered ${data.length} application commands.`))
+	.then(data => console.log(`Successfully registered ${data.length} guild commands.`))
+	.catch(console.error);
+
+rest.put(Routes.applicationCommands(clientId), { body: commands })
+	.then(data => console.log(`Successfully registered ${data.length} global commands.`))
 	.catch(console.error);

@@ -43,7 +43,7 @@ module.exports = {
         //     }
         // });
         var file = require('./loctest.json').table;
-        fs.readFile('./commands/loctest.json', 'utf8', function readFileCallback(err, data){
+        fs.readFileSync('./commands/loctest.json', 'utf8', function readFileCallback(err, data){
             if (err){
                 console.log(err);
             } else {
@@ -54,7 +54,7 @@ module.exports = {
                             file[i].location = location;
                             changed = true;
                             json2 = JSON.stringify(file, null, 4); //convert it back to json
-                            fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
+                            fs.writeFileSync('./commands/loctest.json', json2, 'utf8', err => {
                                 err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
                             }); // write it back
                         }
@@ -68,7 +68,7 @@ module.exports = {
                         location: location
                     });
                     json2 = JSON.stringify(data, null, 4); //convert it back to json
-                    fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
+                    fs.writeFileSync('./commands/loctest.json', json2, 'utf8', err => {
                         err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
                     }); // write it back
                 }

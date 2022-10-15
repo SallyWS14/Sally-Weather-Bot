@@ -1,0 +1,56 @@
+{
+    //文字編輯器
+    "editor.fontSize": 16, //字級
+    "editor.lineHeight": 24, //行高
+    "editor.fontFamily": "'Fira Code', 'Source Code Pro', Consolas, 'Courier New', monospace", //字型
+    "editor.fontLigatures": true, //啟用/停用連字
+    "editor.tabSize": 4, //Tab的空格
+    "editor.wordWrap": "on", //程式碼換行
+    "editor.tabCompletion": "on", //啟用tab鍵自動完成
+    "editor.renderWhitespace": "boundary", //呈現空白字符的方式
+    "editor.showFoldingControls": "always", //顯示摺疊控制向
+    "editor.snippetSuggestions": "top", //將程式碼片段建議顯示於頂端
+    "files.autoGuessEncoding": true, //在開啟檔案時推測字元集編碼
+    "files.insertFinalNewline": true, //儲存檔案時在結尾插入一個新行
+    "files.trimTrailingWhitespace": true, //儲存檔案時修剪尾端空白
+    "terminal.integrated.fontFamily": "Lucida Console",
+    //工作台
+    "workbench.colorTheme": "Default Dark+", //主題
+    "workbench.colorCustomizations": { //自訂樣式
+        "activityBar.background": "#00897b",
+        "sideBar.background": "#202325",
+        "breadcrumb.focusForeground": "#80cbc4",
+        "breadcrumb.activeSelectionForeground": "#6cffec",
+        "list.hoverForeground": "#6cffec",
+        "list.hoverBackground": "#26292b",
+        "list.inactiveSelectionForeground": "#6cffec",
+        "list.inactiveSelectionBackground": "#26292c",
+        "list.inactiveFocusBackground": "#26292c",
+        "list.focusForeground": "#ffffff",
+        "list.focusBackground": "#26292b",
+        "list.activeSelectionForeground": "#ffffff",
+        "list.activeSelectionBackground": "#009688",
+        "list.invalidItemForeground": "#5d8e89",
+        "list.errorForeground": "#ff6d99",
+        "list.warningForeground": "#bdd972",
+        "editorGroup.border": "#1a1a1a",
+        "tab.inactiveForeground": "#bfe1dd",
+        "tab.activeForeground": "#5bdecd",
+        "tab.activeBorder": "#5bdecd",
+        "statusBar.background": "#202325"
+    },
+    "breadcrumbs.enabled": true, //啟用麵包屑
+    //視窗
+    "window.menuBarVisibility": "toggle", //隱藏功能表，按Alt鍵時顯示
+    "window.titleBarStyle": "custom", //視窗標題列的外觀
+    //功能
+    "explorer.confirmDelete": false, //檔案刪除時確認
+    "explorer.confirmDragAndDrop": false,
+    "git.ignoreLimitWarning": true,
+    "python.formatting.provider": "yapf",
+    "jupyter.jupyterServerType": "local",
+    "python.pythonPath": "C:\\Users\\Ethan Hsu\\anaconda3\\python.exe",
+    "python.analysis.extraPaths": [
+        "./sources"
+    ],
+}

@@ -9,7 +9,7 @@ module.exports = {
 				.setDescription('Location to get weather history for').setRequired(true),
 		)
 		.addStringOption(
-			option => option.setName('Date')
+			option => option.setName('date')
 				.setDescription('Date to get weather history for').setRequired(true),
 		)
 		.addStringOption(

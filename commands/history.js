@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const https = require('https');
-const histLog = require('./history.json');
+const https = require('node:https');
 const { weatherapikey } = require('../config.json');
 const fs = require('fs');
 
@@ -41,40 +40,8 @@ module.exports = {
 				const body = JSON.parse(data);
 				history.location = (body.location);
 				history.forecast = (body.forecast);
-				// histLog[interaction.guildId] = {};
-				// histLog[interaction.guildId][interaction.user.id] = {
-				// 	location: history.location,
-				// 	forecast: history.forecast,
-				// };
-				// histLog[interaction.guildId][interaction.user.id].forecast = history.forecast;
-				// if (histLog.servers !== undefined) {
-				// 	const servers = {
-				// 		servers: [],
-				// 	};
-				// 	histLog = servers;
-				// }
-				// console.log(histLog);
-				// for (let i = 0; i < histLog.servers.length; i++) {
-				// 	if (histLog.servers[i].guildId == interaction.guildId) {
-				// 		if (histLog.servers[i].userId == interaction.user.id) {
-				// 			histLog.servers[i].location = history.location;
-				// 			histLog.servers[i].forecast = history.forecast;
-				// 		} else {
-				// 			histLog.servers[i].guildId = interaction.guildId;
-				// 			histLog.servers[i].userId = interaction.user.id;
-				// 			histLog.servers[i].location = history.location;
-				// 			histLog.servers[i].forecast = history.forecast;
-				// 		}
-				// 	}
-				// }
-				// const histLogJson = JSON.stringify(histLog, null, 4);
-				// console.log(histLogJson);
-				// fs.writeFileSync('./commands/history.json', histLogJson, function writeJSON(err) {
-				// 	if (err) return console.log(err);
-				// 	console.log(histLogJson);
-				// 	console.log('writing to ' + './commands/history.json');
-				// });
 				console.log(history);
+				console.log(history.forecast);
 				fields = [
 					{
 						name: `${history.location.name}, ${history.location.region}, ${history.location.country}`,
@@ -106,7 +73,7 @@ module.exports = {
 				];
 				console.log(fields);
 				const historyEmbed = new EmbedBuilder()
-					.setColor(0xEA4040)
+					.setColor(0xFEB548)
 					.setTitle('Weather History')
 					.setDescription(`Weather for ${location} on ${idate}${itime == null ? '' : ' ' + itime}`)
 					.setThumbnail(interaction.client.user.defaultAvatarURL)
@@ -118,7 +85,6 @@ module.exports = {
 					});
 				console.log(historyEmbed);
 				await interaction.reply({ content: '', embeds: [historyEmbed] });
-				// console.log(body);
 			});
 		});
 		reqGet.on('error', (err) => {

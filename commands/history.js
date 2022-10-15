@@ -9,11 +9,11 @@ module.exports = {
 				.setDescription('Location to get weather history for').setRequired(true),
 		)
 		.addStringOption(
-			option => option.setName('Date')
+			option => option.setName('date')
 				.setDescription('Date to get weather history for').setRequired(true),
 		)
 		.addStringOption(
-			option => option.setName('Time')
+			option => option.setName('time')
 				.setDescription('Time to get weather history for').setRequired(true),
 		),
 	async execute(interaction) {

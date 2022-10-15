@@ -20,13 +20,16 @@ module.exports = {
 			method: 'GET',
 		};
 		const reqGet = https.request(optionsGet, (res) => {
+			console.log(res.data);
+			console.log(res.statusCode);
+			console.log(res.statusMessage);
 			res.on('data', async (d) => {
 				console.log(d);
 			});
 		});
 		reqGet.end();
 		reqGet.on('error', (err) => {
-			console.error(err);
+			console.error(err.message);
 		});
 		const historyEmbed = new EmbedBuilder()
 			.setColor(0xEA4040)

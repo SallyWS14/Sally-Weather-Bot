@@ -27,21 +27,16 @@ module.exports = {
 		let data = '';
 		let fields = [];
 		const reqGet = https.request('https://' + optionsGet.host + decodeURIComponent(optionsGet.path), (res) => {
-			// console.log('===============================');
-			// console.log(res);
 			console.log('===============================');
 			console.log(`${res.statusCode} ${res.statusMessage}`);
 			console.log('===============================');
 			res.on('data', async (d) => {
-				// console.log(d);
 				data += d;
 			});
 			res.on('end', async () => {
 				const body = JSON.parse(data);
 				history.location = (body.location);
 				history.forecast = (body.forecast);
-				console.log(history);
-				console.log(history.forecast);
 				fields = [
 					{
 						name: `${history.location.name}, ${history.location.region}, ${history.location.country}`,
@@ -50,32 +45,18 @@ module.exports = {
 								Timezone: ${history.location.tz_id}
 								Local Time: ${history.location.localtime}`,
 					},
-					{
-						name: '\u200b',
-						value: '\u200b',
-						inline: false,
-					},
-					{
-						name: 'Current Guild',
-						value: interaction.guildId,
-						inline: true,
-					},
-					{
-						name: 'Inline field title',
-						value: 'Some value here',
-						inline: true,
-					},
-					{
-						name: 'Inline field title',
-						value: 'Some value here',
-						inline: true,
-					},
+					// {
+					// 	name: '\u200b',
+					// 	value: '\u200b',
+					// 	inline: false,
+					// },
 				];
-				console.log(fields);
+				// console.log(fields);
+				const desc = `Weather for ${location} on ${idate}${itime == null ? '' : ' ' + itime}`;
 				const historyEmbed = new EmbedBuilder()
 					.setColor(0xFEB548)
 					.setTitle('Weather History')
-					.setDescription(`Weather for ${location} on ${idate}${itime == null ? '' : ' ' + itime}`)
+					.setDescription(desc)
 					.setThumbnail(interaction.client.user.defaultAvatarURL)
 					.setTimestamp(new Date())
 					.setFields(fields)
@@ -83,7 +64,7 @@ module.exports = {
 						icon_url: interaction.client.user.defaultAvatarURL,
 						text: 'Powered by WeatherAPI.com',
 					});
-				console.log(historyEmbed);
+				// console.log(historyEmbed);
 				await interaction.reply({ content: '', embeds: [historyEmbed] });
 			});
 		});

@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+//at the top of your file
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const https = require('https');
 const { API_KEY } = require('../config.json');
 
@@ -21,8 +22,15 @@ module.exports = {
                 console.log(body);
                 weather = body.main.temp;
                 // process.stdout.write(body.weather);
-
-                await interaction.reply({content: `The current weather ${weather}`, ephemeral: true});
+                // body.weather[0].main
+                // body.weather[0].description\
+                const weatherEmbed = new EmbedBuilder()
+                    .setColor("0xFEB548")
+                    .setThumbnail(`http://openweathermap.org/img/wn/${body.weather[0].icon}@2x.png`)
+                    .setTitle('current weather')
+                    .setDescription('Get current weather!')
+                console.log(weatherEmbed)
+                await interaction.reply({content: `The current weather ${weather}`, embeds: [weatherEmbed], ephemeral: true});
                 //await interaction.reply({content: `The current weather ${body.weather}`, ephemeral: true})
             });  
         }).on('error',(e) => {

@@ -10,7 +10,7 @@ module.exports = {
 		.addStringOption(option => option.setName('value').setDescription('Value to update')),
 	async execute(interaction) {
 		const value = interaction.options.getString('value');
-		await interaction.reply({ content: 'hello!'})
+		await interaction.reply({ content: 'hello!' });
 		// let hasUser = await checkRecord(interaction.guildId, interaction.user.id);
 		// if (value === null || value === '' || value === undefined) {
 		// 	if (hasUser) {

@@ -25,8 +25,7 @@ module.exports = {
 			method: 'GET',
 		};
 		let data = '';
-		let fields = [];
-		const reqGet = https.request('https://' + optionsGet.host + decodeURIComponent(optionsGet.path), (res) => {
+		const reqGet = https.get(optionsGet.host + decodeURIComponent(optionsGet.path), (res) => {
 			console.log('===============================');
 			console.log(`${res.statusCode} ${res.statusMessage}`);
 			console.log('===============================');
@@ -37,6 +36,7 @@ module.exports = {
 				const body = JSON.parse(data);
 				history.location = (body.location);
 				history.forecast = (body.forecast);
+				let fields = [];
 				fields = [
 					{
 						name: `${history.location.name}, ${history.location.region}, ${history.location.country}`,
@@ -51,7 +51,6 @@ module.exports = {
 					// 	inline: false,
 					// },
 				];
-				// console.log(fields);
 				const desc = `Weather for ${location} on ${idate}${itime == null ? '' : ' ' + itime}`;
 				const historyEmbed = new EmbedBuilder()
 					.setColor(0xFEB548)
@@ -64,7 +63,6 @@ module.exports = {
 						icon_url: interaction.client.user.defaultAvatarURL,
 						text: 'Powered by WeatherAPI.com',
 					});
-				// console.log(historyEmbed);
 				await interaction.reply({ content: '', embeds: [historyEmbed] });
 			});
 		});

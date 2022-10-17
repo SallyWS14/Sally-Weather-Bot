@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const https = require('node:https');
 const { weatherapikey } = require('../config.json');
-const fs = require('fs');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,9 +8,9 @@ module.exports = {
 		.setDescription('Get weather history!')
 		.addStringOption(option => option.setName('location').setDescription('Location to get weather history for').setRequired(true))
 		.addStringOption(option => option.setName('date').setDescription('Date to get weather history for [YYYY-MM-DD]').setRequired(true))
-		.addStringOption(option => option.setName('unit').setDescription('Celsius or Farhrerheit').setRequired(true).addChoices(
-			{name: 'C', value: 'metric'},
-			{name: 'F', value: 'imperial'},
+		.addStringOption(option => option.setName('unit').setDescription('Celsius or Fahrenheit').setRequired(true).addChoices(
+			{ name: 'C', value: 'metric' },
+			{ name: 'F', value: 'imperial' },
 		))
 		.addStringOption(option => option.setName('time').setDescription('Time of day [HH:00]')),
 	async execute(interaction) {
@@ -21,12 +20,28 @@ module.exports = {
 		const itime = interaction.options.getString('time') == null ? new Date().getHours() : interaction.options.getString('time').split(':')[0];
 		if (idate > new Date().toISOString().split('T')[0]) {
 			const embed = new EmbedBuilder()
-			.setColor('#FF0000')
-			.setTitle('Error')
-			// .setThumbnail(interaction.client.user.avatarURL())
-			.setFooter({ text: 'Sally Weather Bot', iconURL: interaction.client.user.avatarURL()})
-			.setTimestamp()
-			.setDescription('Date cannot be in the future!');
+				.setColor('#EA4040')
+				.setTitle('Error')
+				// .setThumbnail(interaction.client.user.avatarURL())
+				.setFooter({ text: 'Sally Weather Bot', iconURL: interaction.client.user.avatarURL() })
+				.setTimestamp()
+				.setDescription('Date cannot be in the future!');
+			await interaction.reply({ embeds: [embed] });
+			return;
+		}
+		const aYearAgo = new Date();
+		aYearAgo.setFullYear(aYearAgo.getFullYear() - 1);
+		console.log(aYearAgo);
+		aYearAgo.setDate(aYearAgo.getDate() - 1);
+		console.log(aYearAgo);
+		if (idate <= aYearAgo.toISOString().split('T')[0]) {
+			const embed = new EmbedBuilder()
+				.setColor('#EA4040')
+				.setTitle('Error')
+				// .setThumbnail(interaction.client.user.avatarURL())
+				.setFooter({ text: 'Sally Weather Bot', iconURL: interaction.client.user.avatarURL() })
+				.setTimestamp()
+				.setDescription('Date cannot be more than a year in the past!');
 			await interaction.reply({ embeds: [embed] });
 			return;
 		}
@@ -53,9 +68,8 @@ module.exports = {
 			path: encodeURIComponent(`/v1/history.json?key=${weatherapikey}&q=${location}&dt=${idate}&hour=${itime}`),
 			method: 'GET',
 		};
-		const embeds = [];
 		let data = '';
-		const reqGet = https.get(`https://${optionsGet.host}${decodeURIComponent(optionsGet.path)}`, (res) => {
+		https.get(`https://${optionsGet.host}${decodeURIComponent(optionsGet.path)}`, (res) => {
 			console.log(`https://${optionsGet.host}${decodeURIComponent(optionsGet.path)}`);
 			console.log('===============================');
 			console.log(`${res.statusCode} ${res.statusMessage}`);
@@ -82,7 +96,7 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: `Weather @ hour ${hour}`,
+						name: `Weather @ ${hour}`,
 						value: `Temp: ${unit == 'metric' ? history.hours[0].temp_c : history.hours[0].temp_f}°${unit == 'metric' ? 'C' : 'F'}
 								Condition: ${history.hours[0].condition.text}`,
 						inline: true,
@@ -118,35 +132,44 @@ module.exports = {
 };
 
 const magnet = async (haystack, needle) => {
-	return (() => {
-		return new Promise((resolve, reject) => {
-			const res = Object.keys(haystack).find(key => haystack[key].includes(needle));
+	return (() => new Promise((resolve, reject) => {
+		const res = Object.keys(haystack).find(key => haystack[key].includes(needle));
+		if (res.length > 0) {
 			return resolve(res);
-		});
-	})();
+		}
+		else {
+			return reject(new Error({ status: 'failed', value: 'Could not find needle in haystack'}));
+		}
+	}))();
 };
 
 const hardMagnet = async (haystack, needle) => {
-	return (() => {
-		return new Promise((resolve, reject) => {
-			let res = '';
-			for (const element of haystack) {
-				if (element.includes(needle)) {
-					res = element;
-					console.log(res);
-				}
+	return (() => new Promise((resolve, reject) => {
+		let res = '';
+		for (const element of haystack) {
+			if (element.includes(needle)) {
+				res = element;
+				console.log(res);
 			}
+		}
+		if (res === '') {
 			return resolve(res);
-		});
-	})();
-}
+		}
+		else {
+			return reject(new Error({ status: 'failed', value: 'Could not find needle in haystack' }));
+		}
+	}))();
+};
 
 const deepMagnet = async (haystack, needle) => {
-	return (() => {
-		return new Promise((resolve, reject) => {
-			let res = haystack.filter(obj => obj.time === needle)
-			console.log(res);
+	return (() => new Promise((resolve, reject) => {
+		const res = haystack.filter(obj => obj.time === needle);
+		console.log(res);
+		if (res.length === 0) {
 			return resolve(res);
-		});
-	})();
-}
+		}
+		else {
+			return reject(new Error({ status: 'failed', value: 'Could not find needle in haystack' }));
+		}
+	}))();
+};

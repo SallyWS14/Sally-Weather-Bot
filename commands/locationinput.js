@@ -9,7 +9,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('givelocation')
 		.setDescription('Give Location To the Bot')
-        .addStringOption(option => option.setName('location').setDescription('Your location?').setRequired(true)),
+        .addStringOption(option => option.setName('location').setDescription('Your location?')
+        .setRequired(true)),
 
     async execute(interaction) {
         var fs = require('fs');
@@ -61,6 +62,7 @@ module.exports = {
             	{ name: 'Your Name: ', value: user_tag },
                 { name: 'Your Current Location: ', value: location }
             )
+            .setThumbnail(interaction.client.user.avatarURL())
             await interaction.reply({content: '', embeds:[currLoc]})
             // var data = {
             //     guild_id: guildid,

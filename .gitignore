@@ -108,3 +108,5 @@ dist
 config.json
 ./.vscode
 /.vscode
+.vscode/settings.json
+.vscode/launch.json

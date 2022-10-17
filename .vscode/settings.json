@@ -3,6 +3,7 @@
         "idate",
         "itime",
         "WAPIKEY",
+        "weatherapi",
         "weatherapikey"
     ]
 }

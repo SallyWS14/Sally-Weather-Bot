@@ -9,22 +9,22 @@
     {
         "guild_id": "1018963347154149448",
         "user_tag": "EthanH#6948",
-        "location": "Taipei",
-        "latitude": 25.0329636,
-        "longitude": 121.5654268
+        "location": "Tokyo",
+        "latitude": 35.6761919,
+        "longitude": 139.6503106
     },
     {
         "guild_id": "807460348361703424",
         "user_tag": "EthanH#6948",
+        "location": "Paris",
+        "latitude": 48.856614,
+        "longitude": 2.3522219
+    },
+    {
+        "guild_id": "1018963347154149448",
+        "user_tag": "Tasperen#4380",
         "location": "Kelowna",
         "latitude": 49.8879519,
         "longitude": -119.4960106
-    },
-    {
-        "guild_id": "807460348361703424",
-        "user_tag": "EthanH#6948",
-        "location": "Taipei",
-        "latitude": 25.0329636,
-        "longitude": 121.5654268
     }
 ]

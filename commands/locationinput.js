@@ -34,82 +34,62 @@ module.exports = {
             lng = (r.data.results[0].geometry.location.lng);
         });
 
-        // if (location == null) {
-        //     for (let i = 0; i < file.length; i++){
-        //         if (file[i].guild_id == guildid) {
-        //             if (file[i].user_tag == user_tag) {
-        //                 const locOutput = new EmbedBuilder()
-        //                     .setColor(0xFEB548)
-        //                     .setTitle('Previous Location')
-        //                     .setDescription('Did not receive a new location,\n this is your previous location')
-        //                     .setTimestamp()
-        //                     .addFields(
-        //                         { name: 'Your Name: ', value: user_tag },
-        //                         { name: 'Your Previous Location: ', value: file[i].location },
-        //                     );
-        //                 await interaction.reply({ content: '', embeds: [locOutput] });
-        //                 break;
-        //             }
-        //         }
-        //     };
-        // } else {
-            const currLoc = new EmbedBuilder()
-            .setColor(0xFEB548)
-            .setTitle('Current Location')
-            .setDescription('This is your current location')
-            .setTimestamp()
-            .addFields(
-            	{ name: 'Your Name: ', value: user_tag },
-                { name: 'Your Current Location: ', value: location }
-            )
-            .setThumbnail(interaction.client.user.avatarURL())
-            await interaction.reply({content: '', embeds:[currLoc]})
-            // var data = {
-            //     guild_id: guildid,
-            //     user_tag: user_tag,
-            //     location: location,
-            //     latitude: lat,
-            //     longitude: lng
-            // };
-            // var json2 = JSON.stringify(data,null,4);
-            // console.log(json2);
-            fs.readFile('./commands/loctest.json', 'utf8', function readFileCallback(err, data){
-            if (err){
-                console.log(err);
-            } else {
-                var changed = false;
-                for (let i = 0; i < file.length; i++){
-                    if (file[i].guild_id == guildid) {
-                        if (file[i].user_tag == user_tag) {
-                            file[i].location = location;
-                            file[i].latitude = lat;
-                            file[i].longitude = lng;
-                            changed = true;
-                        }
+        const currLoc = new EmbedBuilder()
+        .setColor(0xFEB548)
+        .setTitle('Current Location')
+        .setDescription('This is your current location')
+        .setTimestamp()
+        .addFields(
+        	{ name: 'Your Name: ', value: user_tag },
+            { name: 'Your Current Location: ', value: location }
+        )
+        .setThumbnail(interaction.client.user.avatarURL())
+        await interaction.reply({content: '', embeds:[currLoc]})
+        // var data = {
+        //     guild_id: guildid,
+        //     user_tag: user_tag,
+        //     location: location,
+        //     latitude: lat,
+        //     longitude: lng
+        // };
+        // var json2 = JSON.stringify(data,null,4);
+        // console.log(json2);
+        fs.readFile('./commands/loctest.json', 'utf8', function readFileCallback(err, data){
+        if (err){
+            console.log(err);
+        } else {
+            var changed = false;
+            for (let i = 0; i < file.length; i++){
+                if (file[i].guild_id == guildid) {
+                    if (file[i].user_tag == user_tag) {
+                        file[i].location = location;
+                        file[i].latitude = lat;
+                        file[i].longitude = lng;
+                        changed = true;
                     }
-                };
-                if (!changed) {
-                    data = JSON.parse(data);
-                    data.push({
-                        guild_id: guildid,
-                        user_tag: user_tag,
-                        location: location,
-                        latitude: lat,
-                        longitude: lng
-                    });
-                    json2 = JSON.stringify(data, null, 4); //convert it back to json
-                    console.log(json2);
-                    fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
-                        err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
-                    }); // write it back
-                } else {
-                    json2 = JSON.stringify(file, null, 4); //convert it back to json
-                            console.log(json2);
-                            fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
-                                err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
-                            }); // write it back
                 }
-            }});
-        // }
+            };
+            if (!changed) {
+                data = JSON.parse(data);
+                data.push({
+                    guild_id: guildid,
+                    user_tag: user_tag,
+                    location: location,
+                    latitude: lat,
+                    longitude: lng
+                });
+                json2 = JSON.stringify(data, null, 4); //convert it back to json
+                console.log(json2);
+                fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
+                    err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
+                }); // write it back
+            } else {
+                json2 = JSON.stringify(file, null, 4); //convert it back to json
+                        console.log(json2);
+                        fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
+                            err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
+                        }); // write it back
+            }
+        }});
     },
 };

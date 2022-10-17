@@ -45,15 +45,6 @@ module.exports = {
         )
         .setThumbnail(interaction.client.user.avatarURL())
         await interaction.reply({content: '', embeds:[currLoc]})
-        // var data = {
-        //     guild_id: guildid,
-        //     user_tag: user_tag,
-        //     location: location,
-        //     latitude: lat,
-        //     longitude: lng
-        // };
-        // var json2 = JSON.stringify(data,null,4);
-        // console.log(json2);
         fs.readFile('./commands/loctest.json', 'utf8', function readFileCallback(err, data){
         if (err){
             console.log(err);

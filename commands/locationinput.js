@@ -14,7 +14,7 @@ module.exports = {
 
     async execute(interaction) {
         var fs = require('fs');
-        var file = require('./loctest.json');
+        var file = require('./storage/location.json');
         const location = interaction.options.getString('location');
         const user_tag = interaction.user.tag;
         const guildid = interaction.guildId;
@@ -45,7 +45,7 @@ module.exports = {
         )
         .setThumbnail(interaction.client.user.avatarURL())
         await interaction.reply({content: '', embeds:[currLoc]})
-        fs.readFile('./commands/loctest.json', 'utf8', function readFileCallback(err, data){
+        fs.readFile('./commands/storage/location.json', 'utf8', function readFileCallback(err, data){
         if (err){
             console.log(err);
         } else {
@@ -71,13 +71,13 @@ module.exports = {
                 });
                 json2 = JSON.stringify(data, null, 4); //convert it back to json
                 console.log(json2);
-                fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
+                fs.writeFile('./commands/storage/location.json', json2, 'utf8', err => {
                     err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
                 }); // write it back
             } else {
                 json2 = JSON.stringify(file, null, 4); //convert it back to json
                         console.log(json2);
-                        fs.writeFile('./commands/loctest.json', json2, 'utf8', err => {
+                        fs.writeFile('./commands/storage/location.json', json2, 'utf8', err => {
                             err ? console.log('Error writing file', err) : console.log('Successfully wrote file');
                         }); // write it back
             }

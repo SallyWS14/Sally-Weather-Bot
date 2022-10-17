@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const https = require('https');
 const { API_KEY } = require('../config.json');
-const lat = 24.77;
-const lon = 46.73;
+const lat = 49.88;
+const lon = -119.47;
 
 
 
@@ -18,9 +18,7 @@ module.exports = {
         
             res.on('data', (d) => {
                 data += d;
-              //process.stdout.write(d);
-              //process.stdout.write(d);
-              
+        
             });
 
             res.on('end', async() => {

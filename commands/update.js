@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const uFile = './update.json';
+const uFile = './storage/update.json';
 const updateFile = require(uFile);
 const fs = require('fs');
 

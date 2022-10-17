@@ -19,9 +19,32 @@ module.exports = {
 		const idate = interaction.options.getString('date');
 		const unit = interaction.options.getString('unit');
 		const itime = interaction.options.getString('time') == null ? new Date().getHours() : interaction.options.getString('time').split(':')[0];
+		if (idate > new Date().toISOString().split('T')[0]) {
+			const embed = new EmbedBuilder()
+			.setColor('#FF0000')
+			.setTitle('Error')
+			// .setThumbnail(interaction.client.user.avatarURL())
+			.setFooter({ text: 'Sally Weather Bot', iconURL: interaction.client.user.avatarURL()})
+			.setTimestamp()
+			.setDescription('Date cannot be in the future!');
+			await interaction.reply({ embeds: [embed] });
+			return;
+		}
+		// else if (idate > new Date().toISOString().split('T')[0] || itime > new Date().getHours() && idate == new Date().toISOString().split('T')[0]) {
+		// 	const embed = new EmbedBuilder()
+		// 	.setColor('#FF0000')
+		// 	.setTitle('Error')
+		// 	// .setThumbnail(interaction.client.user.avatarURL())
+		// 	.setFooter({ text: 'Sally Weather Bot', iconURL: interaction.client.user.avatarURL()})
+		// 	.setTimestamp()
+		// 	.setDescription('Date and time cannot be in the future!');
+		// 	await interaction.reply({ embeds: [embed] });
+		// 	return;
+		// }
 		const history = {
 			location: {},
 			forecast: {},
+			day: {},
 			hours: {},
 		};
 		const optionsGet = {
@@ -44,44 +67,47 @@ module.exports = {
 				const body = JSON.parse(data);
 				history.location = (body.location);
 				history.forecast = (body.forecast);
-				// console.log(history.forecast);
-				// console.log(body.forecast.forecastday[0].day);
-				// console.log(body.forecast.forecastday[0].hour);
-				history.hours = (await deepMagnet(body.forecast.forecastday[0].hour, `${idate} ${itime}:00`));
+				history.day = (body.forecast.forecastday[0].day);
+				history.hours = (body.forecast.forecastday[0].hour);
 				console.log(history.hours);
 				let fields = [];
+				const hour = ((itime == '00') || (itime == 0) || (itime == '0') ? '12 AM' : (itime < 12) ? `${itime} AM` : `${itime} PM`);
 				fields = [
 					{
+						name: 'Average Temperature',
+						value: `Max Temp: ${unit === 'metric' ? history.day.maxtemp_c : history.day.maxtemp_f}°${unit === 'metric' ? 'C' : 'F'}
+								Min Temp: ${unit === 'metric' ? history.day.mintemp_c : history.day.mintemp_f}°${unit === 'metric' ? 'C' : 'F'}
+								Avg Temp: ${unit === 'metric' ? history.day.avgtemp_c : history.day.avgtemp_f}°${unit === 'metric' ? 'C' : 'F'}
+								Condition: ${history.day.condition.text}`,
+						inline: true,
+					},
+					{
+						name: `Weather @ hour ${hour}`,
+						value: `Temp: ${unit == 'metric' ? history.hours[0].temp_c : history.hours[0].temp_f}°${unit == 'metric' ? 'C' : 'F'}
+								Condition: ${history.hours[0].condition.text}`,
+						inline: true,
+					},
+					{
 						name: `${history.location.name}, ${history.location.region}, ${history.location.country}`,
-						value: `Lat: ${history.location.lat}
-								Lon: ${history.location.lon}
+						value: `LatLng: ${history.location.lat}, ${history.location.lon}
 								Timezone: ${history.location.tz_id}
 								Local Time: ${history.location.localtime}`,
 					},
-					{
-						name: 'Average Temperature',
-						value: `max: ${unit === 'metric' ? history.hours[0].maxtemp_c : history.hours[0].maxtemp_f}°${unit === 'metric' ? 'C' : 'F'}
-								min: ${unit === 'metric' ? history.hours[0].mintemp_c : history.hours[0].mintemp_f}°${unit === 'metric' ? 'C' : 'F'}
-								avg: ${unit === 'metric' ? history.hours[0].avgtemp_c : history.hours[0].avgtemp_f}°${unit === 'metric' ? 'C' : 'F'}`,
-						inline: true,
-					},
-					{
-						name: `At hour ${itime}:00`,
-						value: `${ unit == 'C' ? history.hours.temp_c + '°C' : history.hours.temp_f + '°F'}`,
-						inline: true,
-					}
 				];
-				const desc = `Weather for ${location} on ${idate}${itime == null ? '' : ' @' + itime}`;
+				const desc = `Weather for ${location} on ${idate}${(itime == null) ? '' : ' @ ' + hour}`;
 				const historyEmbed = new EmbedBuilder()
 					.setColor(0xFEB548)
-					.setTitle('Weather History')
+					.setTitle('Powered by WeatherAPI.com')
+					.setURL('https://www.weatherapi.com/')
 					.setDescription(desc)
-					.setThumbnail(history.hours.condition.icon)
+					.setThumbnail(`https:${history.hours[0].condition.icon}`)
+					// .setThumbnail(interaction.client.user.avatarURL())
+					// .setThumbnail(`https://cdn.weatherapi.com/v4/images/weatherapi_logo.png`)
 					.setTimestamp(new Date())
 					.setFields(fields)
 					.setFooter({
-						icon_url: interaction.client.user.avatarURL(),
-						text: 'Powered by WeatherAPI.com',
+						text: 'Weather History by Sally Weather Bot',
+						iconURL: interaction.client.user.avatarURL(),
 					});
 				await interaction.reply({ content: '', embeds: [historyEmbed] });
 			});
@@ -119,6 +145,7 @@ const deepMagnet = async (haystack, needle) => {
 	return (() => {
 		return new Promise((resolve, reject) => {
 			let res = haystack.filter(obj => obj.time === needle)
+			console.log(res);
 			return resolve(res);
 		});
 	})();

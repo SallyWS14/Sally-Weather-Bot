@@ -7,7 +7,7 @@ const {Client} = require("@googlemaps/google-maps-services-js");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('givelocation')
+		.setName('location')
 		.setDescription('Give Location To the Bot')
         .addStringOption(option => option.setName('location').setDescription('Your location?')
         .setRequired(true)),

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const https = require('https');
 const { API_KEY } = require('../config.json');
 const lat = 49.88;
@@ -72,7 +72,21 @@ module.exports = {
                 console.log(body.clouds.all);
                 
                 //Reply
-                await interaction.reply({content: wear, ephemeral: true});
+
+                //await interaction.reply({content: wear, ephemeral: false});
+
+                //Reply embed 
+                const dressEmbed = new EmbedBuilder()
+                .setColor(0xFEB548)
+                .setTitle("Powered by OpenWeatherMap.org")
+                .setURL('https://openweathermap.org/api')
+                .setDescription(wear)
+                .setFooter({
+                   text: "Dress Sense by Sally Weather Bot",
+                   iconURL: interaction.client.user.avatarURL()})
+                   .setTimestamp()
+                   await interaction.reply({ embeds: [dressEmbed] });
+                
 
               //Check if it is windy
               function checkIfWindy() {

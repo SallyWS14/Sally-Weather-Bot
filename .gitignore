@@ -106,3 +106,7 @@ dist
 # discord config file
 ./config.json
 config.json
+./.vscode
+/.vscode
+.vscode/settings.json
+.vscode/launch.json

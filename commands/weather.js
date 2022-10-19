@@ -30,9 +30,9 @@ module.exports = {
                     .setTitle('current weather')
                     .setDescription('Get current weather!')
                 console.log(weatherEmbed)
-                await interaction.reply({content: `The current weather ${weather}`, embeds: [weatherEmbed], ephemeral: true});
+                await interaction.reply({content: `The current weather ${weather}`, embeds: [weatherEmbed], ephemeral: false});
                 //await interaction.reply({content: `The current weather ${body.weather}`, ephemeral: true})
-            });  
+            });
         }).on('error',(e) => {
             console.error(e);
         }).end();

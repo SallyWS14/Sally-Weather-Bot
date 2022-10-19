@@ -1,0 +1,9 @@
+{
+    "enabled": false,
+    "triggers": [
+        { "location": ["I'm currently at", "I live in", "I just moved to", "I've arrived at", "I have arrived at"] },
+        { "history": ["What was the weather like {x} days ago?", "Did it rain {x} months ago", "How was the weather this time last year"]},
+        { "wear": ["Should I wear jeans today?", "What should I wear today?", "Any recommendations about what I should wear today?", "Should I grab a coat?"]},
+        { "weather": ["How is the weather today?", "Is it chilly today?", "What is the weather like?", "How cold is it today"]}
+    ]
+}

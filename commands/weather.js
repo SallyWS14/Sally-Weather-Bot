@@ -25,12 +25,23 @@ module.exports = {
                 // body.weather[0].main
                 // body.weather[0].description\
                 const weatherEmbed = new EmbedBuilder()
-                    .setColor("0xFEB548")
+                    .setColor(0xFEB548)
                     .setThumbnail(`http://openweathermap.org/img/wn/${body.weather[0].icon}@2x.png`)
-                    .setTitle('current weather')
-                    .setDescription('Get current weather!')
+                    .setTitle('Powered by OpenWeatherMap.org')
+                    .setURL('https://openweathermap.org/api')
+                    .setDescription(body.weather[0].description.toUpperCase())
+                    .setTimestamp()
+                    .addFields(
+                    	{ name: 'Maximum Temperature: ', value: body.main.temp_max+' C' },
+                        { name: 'Minimum Temperature: ', value: body.main.temp_min + ' C' },
+                        { name: 'Humidity: ', value: body.main.humidity +' '}
+                    )
+                    .setFooter({
+                        text: "Weather by Sally Weather Bot",
+                        iconURL: interaction.client.user.avatarURL()
+                    });
                 console.log(weatherEmbed)
-                await interaction.reply({content: `The current weather ${weather}`, embeds: [weatherEmbed], ephemeral: false});
+                await interaction.reply({content: ``, embeds: [weatherEmbed]});
                 //await interaction.reply({content: `The current weather ${body.weather}`, ephemeral: true})
             });
         }).on('error',(e) => {

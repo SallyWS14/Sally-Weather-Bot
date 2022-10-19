@@ -1,0 +1,34 @@
+{
+  "name": "sally-weather-bot",
+  "version": "1.0.0",
+  "description": "Sally Weather System Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node deploy-commands.js && node index.js",
+    "dev": "node deploy-commands.js && nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SallyWS14/Sally-Weather-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SallyWS14/Sally-Weather-Bot/issues"
+  },
+  "homepage": "https://github.com/SallyWS14/Sally-Weather-Bot#readme",
+  "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.16",
+    "clothes-by-weather": "^1.1.2",
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "nodemon": "^2.0.20"
+  }
+}

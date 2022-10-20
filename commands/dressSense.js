@@ -14,6 +14,8 @@ module.exports = {
         https.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=lat=${lon}&appid=${API_KEY}&units=metric`);
         let data = '';
         let weather = '';
+
+        //Access api and obtain general weather information
         https.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, (res) => {
         
             res.on('data', (d) => {
@@ -24,10 +26,8 @@ module.exports = {
             res.on('end', async() => {
                 const body = JSON.parse(data);
                 let wear = "I recommend you wear:\n";
-
-                console.log(body);
               
-                
+                //Check temperature ranges
                 if (body.main.temp >= 22) {
                   wear = wear + ("- a short sleeved shirt \n") + ("- shorts \n");
 
@@ -66,14 +66,7 @@ module.exports = {
                   wear = wear + ('- a raincoat \n') + ('- rain boots \n') + ('- an umbrella \n');
               
                 }
-
-                console.log('wear:');
-                console.log(wear);
-                console.log(body.clouds.all);
                 
-                //Reply
-
-                //await interaction.reply({content: wear, ephemeral: false});
 
                 //Reply embed 
                 const dressEmbed = new EmbedBuilder()
@@ -88,7 +81,7 @@ module.exports = {
                    await interaction.reply({ embeds: [dressEmbed] });
                 
 
-              //Check if it is windy
+              //Checks if it is windy
               function checkIfWindy() {
                 if (body.wind.speed >= 40) {
                   wear = wear + ('- a windbreaker \n') + ('- a hat\n');

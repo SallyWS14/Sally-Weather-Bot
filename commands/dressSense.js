@@ -37,17 +37,17 @@ module.exports = {
                     }
                 }
 
-                if (body.main.temp >= 15 & body.main.temp <= 21) {
+                if (body.main.temp >= 15 & body.main.temp < 22) {
                   wear = wear + ('- a T-shirt \n');
                     checkIfWindy();
                 }
 
-                if (body.main.temp >= 7 & body.main.temp <= 14) {
+                if (body.main.temp >= 7 & body.main.temp < 15) {
                   wear = wear + ('- a hoodie or a sweater \n')
                     checkIfWindy();
                 }
                 
-                if (body.main.temp >= -13 & body.main.temp <= 6) {
+                if (body.main.temp >= -13 & body.main.temp < 7) {
                   wear = wear + ('- a light or medium jacket \n');
                 
                   if (body.wind.speed >= 40) {
@@ -56,7 +56,7 @@ module.exports = {
                   
                 }
                 
-                if (body.main.temp <= -14) {
+                if (body.main.temp < -13) {
                   wear = wear + ('- a winter jacket \n' ) + ('- a scarf \n') + ('- gloves \n') + ('- a hat \n ');
                 }
                 

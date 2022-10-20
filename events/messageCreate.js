@@ -14,6 +14,8 @@ for (const groups in triggers) {
     }
 }
 
+const ai = require('clever-bot-api')
+
 module.exports = {
  	name: 'messageCreate',
  	execute(message) {
@@ -32,8 +34,14 @@ module.exports = {
                 console.log(`Replied to ${message.content}`)
             }).catch(console.error);
         }
-        if (triggerMode) {
+        // console.log(triggerMode());
+        if (triggerMode()) {
             isTriggered(msg, message);
+            // const history = [msgs] for context;
+            ai(msg, message.channel.name).then((resp) => {
+                message.reply(`${resp}`);
+                console.log(resp);
+            });
         }
 	},
 };
@@ -92,12 +100,9 @@ const isTriggered = (sentence, msgItem) => {
 }
 
 const triggerMode = () => {
-    return fs.readFileSync(triggerFile, 'utf-8', err => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-    })["enabled"];
+    let res = fs.readFileSync(triggerFile, 'utf-8');
+    res = JSON.parse(res).enabled;
+    return res;
 }
 
 const toggleTriggerMode = (toggleVal) => {

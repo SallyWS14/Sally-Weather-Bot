@@ -12,10 +12,10 @@ module.exports = {
         .addStringOption(option => option.setName('location').setDescription('Your location?')
         .setRequired(true)),
 
-    async execute(interaction, arg) {
+    async execute(interaction) {
         var fs = require('fs');
         var file = require('./storage/location.json');
-        const location = arg || interaction.options.getString('location');
+        const location = interaction.options.getString('location');
         const user_tag = interaction.user.tag;
         const guildid = interaction.guildId;
         let lat = 'latitude';

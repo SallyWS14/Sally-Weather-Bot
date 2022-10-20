@@ -1,5 +1,5 @@
 {
-    "enabled": true,
+    "enabled": false,
     "triggers": {
         "location": [
             "i'm currently at",

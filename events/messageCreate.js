@@ -1,8 +1,10 @@
 /* eslint-disable indent */
 /* eslint-disable no-trailing-spaces */
 const path = require('path');
+const https = require('node:https');
 const triggerFile = path.join(__dirname, '../commands/storage/triggers.json');
 let triggerSettings = require(triggerFile);
+const { cleverbot } = require('../config.json');
 const fs = require('fs');
 let triggers = triggerSettings.triggers;
 let enabled = triggerSettings.enabled;
@@ -13,13 +15,18 @@ for (const groups in triggers) {
         triggerWords.push(words);
     }
 }
+let cs;
 
 const ai = require('clever-bot-api')
+let cb = {
+    url: 'https://www.cleverbot.com/getreply',
+    key: cleverbot
+}
 
 module.exports = {
  	name: 'messageCreate',
  	execute(message) {
-        msg = message.content.toLowerCase();
+        let msg = message.content.toLowerCase();
         if (message.author.bot) return;
         console.log(`${message.author.tag} in #${message.channel.name} sent a message: ${msg}`);
         if (msg.includes("hey sally")) {
@@ -37,13 +44,41 @@ module.exports = {
         // console.log(triggerMode());
         if (triggerMode()) {
             isTriggered(msg, message);
+            talkToSally(msg, message, cs);
             // const history = [msgs] for context;
-            ai(msg, message.channel.name).then((resp) => {
-                message.reply(`${resp}`);
-                console.log(resp);
-            });
+            // ai(msg, message.channel.name).then((resp) => {
+            //     message.reply(`${resp}`);
+            //     console.log(resp);
+            // });
+            
         }
 	},
+};
+
+const talkToSally = (msg, message, cs) => {
+    let options = {
+        hostname: 'https://www.cleverbot.com/getreply',
+        port: 443,
+        path: `?key=${cleverbot}&input=${msg}&cs=${cs}`,
+        method: 'POST',
+    };
+    let link = `${cb.url}?key=${cb.key}&input=${msg}${cs !== undefined || cs != null ? '&cs=' + cs : ''}`;
+    https.request(link, (resp) => {
+        resp.setEncoding('utf8');
+        let data = '';
+        resp.on('data', (chunk) => {
+            data+=chunk;
+        });
+        resp.on('end', () => {
+            data = JSON.parse(data);
+            console.log(data);
+            cb.cs = data.cs;
+            message.reply(data.output);
+        });
+    }).on('error', err => {
+        console.error(err);
+    })
+    .end();
 };
 
 const isTriggered = (sentence, msgItem) => {
@@ -56,35 +91,23 @@ const isTriggered = (sentence, msgItem) => {
                 const command = commands.get(g);
                 switch(g) {
                     case 'location':
-                        let loc = sentence.split(' ');
-                        loc = loc[loc.length-1];
-                        const intrc = {
-                            // id: msgItem.application,
-                            // type: ApplicationCommand,
-                            commandName: g,
-                            user: msgItem.author,
-                        }
-                        intrc.user = {...msgItem.author, tag: msgItem.author.tag}
-                        let nMsgItem = {...msgItem, interaction: intrc};
-                        // const options = {
-                        //     name: "location",
-                        //     type: String,
-                        //     value: loc,
+                        // let loc = sentence.split(' ');
+                        // loc = loc[loc.length-1];
+                        // const intrc = {
+                        //     commandName: g,
                         //     user: msgItem.author,
-                        //     member: msgItem.member,
-                        //     channel: msgItem.channel,
-                        //     required: commands.get(g).options.required,
-                        //     role: msgItem.member.roles[0],
                         // }
-                        // const newInteraction = {...msgItem.interaction, options: options};
-                        // console.log(newInteraction);
-                        // command.execute(newInteraction);
+                        // intrc.user = {...msgItem.author, tag: msgItem.author.tag}
+                        // let nMsgItem = {...msgItem, interaction: intrc};
                         
-                        console.log(nMsgItem);
-                        console.log(nMsgItem.interaction.user.tag);
-                        command.execute(nMsgItem, loc);
+                        // console.log(nMsgItem);
+                        // console.log(nMsgItem.interaction.user.tag);
+                        // command.execute(nMsgItem, loc);
+                        // break;
+                        message.reply(`I am unable to unable your location. Please run /${g} to change your location`);
                         break;
                     case 'history':
+                        message.reply(`I am unable to process that, please run the /${g} to get the historical weather data`);
                         // commands.get(group)
                         break;
                     case 'weather':

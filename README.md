@@ -1,9 +1,5 @@
 # Sally-Weather-Bot
 
-<<<<<<< HEAD
-Sally Weather System Bot
-========================
-
 Provides you with accurate weather data on demand.
 
 ## Features

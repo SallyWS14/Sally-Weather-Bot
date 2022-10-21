@@ -1,10 +1,9 @@
 {
-    "enabled": true,
+    "aimode": false,
     "triggers": {
         "location": [
             "i'm currently at",
             "i live in",
-            "i just moved to",
             "i've arrived at",
             "i have arrived at",
             "location",
@@ -49,6 +48,10 @@
             "today",
             "warm",
             "rain"
+        ],
+        "time": [
+            "time"
         ]
-    }
+    },
+    "enabled": false
 }

@@ -84,3 +84,12 @@ Provides you with accurate weather data on demand.
 	"time"
 ]
 ```
+- Trigger for cleverbot and normal triggermode
+	- To enable triggermode
+		`hey sally`
+	- To disable triggermode
+		`thank you, sally`, `thanks`, `thank you`, `thx`
+	- To enable ai mode
+	`talkback`, `talk back`, `think about`
+	- To disable ai mode
+	`okay`, `stop`, `shut up`, `shut`

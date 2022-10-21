@@ -3,6 +3,13 @@
 
 Provides you with accurate weather data on demand.
 
+## Running
+- Add the bot to your server using this authentication link:
+	[Sally Authentication](https://discord.com/api/oauth2/authorize?client_id=1021956341872472074&permissions=8&scope=bot)
+- Download the `config.json` file to your computer and move it to the same directory as the index.js file
+- run `npm install` to install the required packages
+- run `npm start` to start the bot
+
 ## Features
 
 - Weather

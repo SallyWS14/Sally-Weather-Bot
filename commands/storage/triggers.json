@@ -1,5 +1,5 @@
 {
-    "aimode": false,
+    "aimode": true,
     "triggers": {
         "location": [
             "i'm currently at",

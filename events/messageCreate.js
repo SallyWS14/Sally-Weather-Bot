@@ -4,8 +4,14 @@ const path = require('path');
 const https = require('node:https');
 const triggerFile = path.join(__dirname, '../commands/storage/triggers.json');
 let triggerSettings = require(triggerFile);
-const { cleverbot } = require('../config.json');
+const { cleverbot, OPENAI_API_KEY } = require('../config.json');
 const fs = require('fs');
+const {Configuration, OpenAIApi } = require('openai');
+const oaiConfig = new Configuration({
+    // apiKey: process.env.OPENAI_API_KEY,
+    apiKey: OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(oaiConfig);
 let triggers = triggerSettings.triggers;
 let enabled = triggerSettings.enabled;
 let aimode = triggerSettings.aimode;
@@ -18,11 +24,14 @@ for (const groups in triggers) {
 }
 let cs;
 
-const ai = require('clever-bot-api')
+const ai = require('clever-bot-api');
+// const { OpenAIApi } = require('openai');
 let cb = {
     url: 'https://www.cleverbot.com/getreply',
     key: cleverbot
 }
+
+let oldMsg = '';
 
 module.exports = {
  	name: 'messageCreate',
@@ -43,10 +52,10 @@ module.exports = {
                 console.log(`Replied to ${message.content}`)
             }).catch(console.error);
         }
-        if (msg.includes("talkback") || msg.includes("talk back") || msg.includes("think about")) {
+        if (msg.includes("talkback") || msg.includes("talk back") || msg.includes("think about") || msg.includes("enable aimode")) {
             toggleAIMode(true);
         }
-        if (msg.includes("okay") || msg.includes("stop") || msg.includes("shut up") || msg.includes("shut")) {
+        if (msg.includes("okay") || msg.includes("stop") || msg.includes("shut up") || msg.includes("shut") || msg.includes("disable aimode")) {
             toggleAIMode(false);
         }
         // console.log(triggerMode());
@@ -61,8 +70,47 @@ module.exports = {
         }
         if (aiMode()) {
             talkToSally(msg, message, cs);
+            // betterAI(msg, message);
         }
 	},
+};
+
+const betterAI = async (msg, message) => {
+    try {
+        let curMsg = `You: ${msg}\n`;
+        oldMsg += curMsg;
+        console.log(oldMsg);
+        let completion = await oai(oldMsg);
+        let response = completion.data.choices[0].text;
+        if (response.trim() != '') {
+            message.reply(response);
+            return;
+        } else {
+            return;
+        }
+    } catch (error) {
+        if(error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+        } else {
+            console.log(error);
+        }
+    }
+};
+
+const oai = async (msg) => {
+    const val = await openai.createCompletion({
+        model: 'text-davinci-002',
+        prompt: msg,
+        temperature: 0.9,
+        max_tokens: 300,
+        top_p: 1,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.6,
+        stop: ["You: "],
+    });
+    console.log(val);
+    return val;
 };
 
 

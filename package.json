@@ -20,12 +20,14 @@
   "homepage": "https://github.com/SallyWS14/Sally-Weather-Bot#readme",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.16",
+    "clever-bot-api": "^1.5.4",
     "clothes-by-weather": "^1.1.2",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "openai": "^3.0.1"
   },
   "devDependencies": {
     "eslint": "^8.25.0",

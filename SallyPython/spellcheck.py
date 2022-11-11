@@ -7,7 +7,6 @@ import re
 # sentence = 'This is a sentencee to checkk!'
 sentence = input("Please give me a sentence: ")
 
-
 def check_word_spelling(word):
     word = Word(word)
     result = word.spellcheck()
@@ -17,7 +16,6 @@ def check_word_spelling(word):
     else:
         return result[0][0]
 
-
 def check_sentence_spelling(sentence):
     string = ""
     words = sentence.split()
@@ -26,6 +24,5 @@ def check_sentence_spelling(sentence):
     for word in words:
         string = string + check_word_spelling(word) + " "
     return string
-
 
 print(check_sentence_spelling(sentence))

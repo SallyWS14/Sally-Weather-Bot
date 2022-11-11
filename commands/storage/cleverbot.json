@@ -1,14 +1,20 @@
 {
-    "Conversations": {
-      "servers": {
-        "serverId": "3ert6789oiuhgvhjsd",
-        "users": {
-          "userId": "etryuio65456",
-          "active": "false",
-          "lastInitiated": "new Date(),",
-          "firstContact": "new Date(),",
-          "conversationLogs": "./conversations/servers/546789087654678/users/546789076567/DateTime.log"
+    "servers": [
+        {
+            "severId": "1018963347154149448",
+            "active": false,
+            "channelId": "1030575608029253632",
+            "logs": "../logs/conversations/servers/1018963347154149448/global/2022-10-19_conversations.log",
+            "users": [
+                {
+                    "userId": "135541270503227392",
+                    "channelId": "1030575608029253632",
+                    "active": false,
+                    "lastInitiated": "2022-10-19T00:16:05.083Z",
+                    "firstContact": "2022-10-19T00:16:05.083Z",
+                    "conversationLogs": "../logs/conversations/servers/1018963347154149448/users/135541270503227392/2022-10-19_conversations.log"
+                }
+            ]
         }
-      }
-    }
-  }
+    ]
+}

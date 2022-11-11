@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Sally Weather Bot</title>
+        {% block head %} {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}" />
+    </head>
+    <body>
+        {% block header %} {% endblock %}
+        <main>
+            <h1>Hello World</h1>
+        </main>
+        <footer></footer>
+        <script>
+            $(document).ready(function() {
+                $("form").on("submit", function(e) {
+                    var rawText = $("#userInput").val();
+                    var userHtml = '<p class="userMessage"><span>' + rawText + '</span></p>';
+                    $("#userInput").val("");
+                    $("#chatbox").append(userHtml);
+                    document.getElementById("messageBox").scrollIntoView({
+                        block: "start"
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>

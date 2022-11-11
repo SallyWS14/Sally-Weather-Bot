@@ -69,6 +69,7 @@ module.exports = {
 			method: 'GET',
 		};
 		let data = '';
+		// call api and process the response
 		https.get(`https://${optionsGet.host}${decodeURIComponent(optionsGet.path)}`, (res) => {
 			console.log(`https://${optionsGet.host}${decodeURIComponent(optionsGet.path)}`);
 			console.log('===============================');
@@ -131,6 +132,7 @@ module.exports = {
 	},
 };
 
+// search for a value in a object array
 const magnet = async (haystack, needle) => {
 	return (() => new Promise((resolve, reject) => {
 		const res = Object.keys(haystack).find(key => haystack[key].includes(needle));
@@ -143,6 +145,7 @@ const magnet = async (haystack, needle) => {
 	}))();
 };
 
+// search for a value in a object array
 const hardMagnet = async (haystack, needle) => {
 	return (() => new Promise((resolve, reject) => {
 		let res = '';
@@ -161,6 +164,8 @@ const hardMagnet = async (haystack, needle) => {
 	}))();
 };
 
+
+// search for a value in a object array
 const deepMagnet = async (haystack, needle) => {
 	return (() => new Promise((resolve, reject) => {
 		const res = haystack.filter(obj => obj.time === needle);

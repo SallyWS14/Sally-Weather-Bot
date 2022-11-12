@@ -1,7 +1,25 @@
 {% block head %}
+<!-- <meta charset="utf-8"> -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, minimal-ui" /> -->
 <meta charset="utf-8">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, minimal-ui" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="theme-color" content="#faf3dd">
+<meta name="twitter:title" content="Sally Weather Bot">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="{{ url_for('static', filename='img/sally_v1_Asset%201.png?h=7d4249cf5cb4a36225d6e8089d5695f0') }}">
+<meta property="og:type" content="website">
+<meta name="twitter:image" content="{{ url_for('static', filename='img/sally_v1_Asset%201.png?h=7d4249cf5cb4a36225d6e8089d5695f0">
+<link rel="icon" type="image/png" sizes="48x56" href="{{ url_for('static', filename='img/sally_v1_Asset%201@0.5x.png?h=a26ed6f9f720758d63aa7a919f561abf') }}">
+<link rel="icon" type="image/png" sizes="48x56" href="{{ url_for('static', filename='img/sally_v1_Asset%201@0.5x.png?h=a26ed6f9f720758d63aa7a919f561abf') }}">
+<link rel="icon" type="image/png" sizes="96x113" href="{{ url_for('static', filename='img/sally_v1_Asset%201-1.png?h=b6e15953ebe54f8e131b0c68cc41a6fb') }}">
+<link rel="icon" type="image/png" sizes="192x225" href="{{ url_for('static', filename='img/sally_v1_Asset%201@2x.png?h=98a10ca3cf83e4c618ea6d7af2fe572c') }}">
+<link rel="icon" type="image/png" sizes="382x448" href="{{ url_for('static', filename='img/sally_v1_Asset%201@4x.png?h=8c2db4fe6310f38a204abd454bffaa77') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css?h=c4f9869962f74790655646387d67a9df') }}">
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json?h=2d142eb3f5d80554173fc97bd4d587a0') }}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/Navbar-Centered-Links-icons.css?h=71330a4df320dbd05cfa8f749db82b02') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}" />
 {% endblock %}

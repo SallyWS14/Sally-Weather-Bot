@@ -1,15 +1,14 @@
-from flask import Flask, request, render_template, url_for
-# from flask_socketio import SocketIO
+from flask import Flask, request, render_template, url_for, jsonify
+# from ../SallyPython import location
 
 app = Flask(__name__)
 app.config.from_object('config')
-# socketio = SocketIO(app)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/')
+@app.route('/chat')
 def chat():
     return render_template('chat.html')
 
@@ -18,18 +17,13 @@ def chat():
 def chat_post():
     if request.method == 'POST':
         message = request.form['message']
-        response = get_response(message)
-        return render_template('chat.html', response=response)
-    else:
-        return render_template('chat.html')
+        response = process_response(message)
+        return response
 
-# def msgInputReceived(methods=['GET', 'POST']):
-#     print('message was received!!!')
-
-# @socketio.on('chatMsg')
-# def handleChatMsg(json, methods=['GET', 'POST']):
-#     print('received chat message: ' + str(json))
-#     socketio.emit('my response', json, callback=msgInputReceived)
+def process_response(text):
+    print("Processing response")
+    result = {'response': "What can I help you with?"}
+    return jsonify(result)
 
 @app.route('/about')
 def about():

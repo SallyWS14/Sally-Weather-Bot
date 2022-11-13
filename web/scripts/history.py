@@ -1,23 +1,45 @@
-import requests
-import json
 import datetime
+import json
+import socket
+
+import requests
+
+from web.scripts.history import histInfo
 
 with open('../storage/config.json', 'r') as f:
     config = json.load(f)
     
 with open('../storage/location.json', 'r') as f:
     location = json.load(f)
-    
+
+# look for a location value if the name matches the name key in the location.json file
+def getLocation(name, lookfor='location'):
+    for loc in location:
+        if location[loc]['name'] == name:
+            return location[loc][lookfor]
+        
+# # if name is found in the location.json file, update else create a new entry
+# def locationUpdate(name, location):
+#     res = getLocation(name, name)
+#     if res is not None:
+#         newLoc = {}
+#     else:
+        
 
 class History:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, location = getLocation(socket.gethostbynamne(socket.gethostname())), rdate = datetime.datetime.now().date(), unit = 'C', time = datatime.datetime.now().hour):
+        self.url = config['history']['url']
+        self.location = location
+        self.date = rdate
+        self.unit = unit
+        self.time = time
+        return self.reply()
     
-    def GetLocation(self, location):
+    def get_location(self, location):
         """Gets the location data from the location.json file"""
         return location[location]
     
-    def Process(self, location: str, date: str, unit: str, time: int):
+    def process(self, location: str, date: str, unit: str, time: int):
         """Gets the weather data from the weather api and returns it
             location: the location to get the weather data for
             date is in the format of YYYY-MM-DD
@@ -53,4 +75,5 @@ class History:
             return weather
         else:
             return "Error: Could not get weather data"
-    
+    def reply(self):
+        return self.process(self.location, self.date, self.unit, self.time)

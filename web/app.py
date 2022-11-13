@@ -22,7 +22,8 @@ def chat_post():
 
 def process_response(text):
     print("Processing response")
-    result = {'response': "What can I help you with?"}
+    # result = {'response': "What can I help you with?"}
+    result = {'response': text}
     return jsonify(result)
 
 @app.route('/about')

@@ -110,3 +110,5 @@ config.json
 /.vscode
 .vscode/settings.json
 .vscode/launch.json
+/web/__pycache__
+/web/venv

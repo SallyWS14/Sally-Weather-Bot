@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>About - Sally Weather Bot</title>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, minimal-ui" /> -->
+        <meta name="theme-color" content="#faf3dd">
+        <meta name="twitter:title" content="Sally Weather Bot">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:image" content="/static/img/sally_v1_Asset%201.png">
+        <meta property="og:type" content="website">
+        <meta name="twitter:image" content="/static/img/sally_v1_Asset%201.png">
+        <link rel="icon" type="image/png" sizes="48x56" href="/static/img/sally_v1_Asset%201@0.5x.png">
+        <link rel="icon" type="image/png" sizes="48x56" href="/static/img/sally_v1_Asset%201@0.5x.png">
+        <link rel="icon" type="image/png" sizes="96x113" href="/static/img/sally_v1_Asset%201-1.png">
+        <link rel="icon" type="image/png" sizes="192x225" href="/static/img/sally_v1_Asset%201@2x.png">
+        <link rel="icon" type="image/png" sizes="382x448" href="/static/img/sally_v1_Asset%201@4x.png">
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+        <link rel="manifest" href="/static/manifest.json">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic&amp;display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/Navbar-Centered-Links-icons.css">
+        <link rel="stylesheet" type="text/css" href="/static/styles/header.css" />
+        <link rel="stylesheet" type="text/css" href="/static/styles/index.css" />
+    </head>
+    <body>
+        <header>
+            <!-- Start: Navbar Right Links (Dark) -->
+            <nav class="navbar navbar-dark navbar-expand-md py-3" style="background: #faf3dd;">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" href="#">
+                        <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: #8d6346;padding: 4px;">
+                            <img class="img-fluid" src="{{ url_for('static', filename='assets/img/sally_v1_Asset%201.png?h=7d4249cf5cb4a36225d6e8089d5695f0') }}" width="90%" loading="eager">
+                        </span>
+                        <span style="color: #feb548;">Sally: The Weather Bot</span>
+                    </a>
+                    <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5">
+                        <span class="visually-hidden">Toggle navigation</span>
+                        <span class="navbar-toggler-icon" style="color: #8d6346;--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-body-bg: #FAF3DD;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-secondary-rgb: 54,70,82;"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navcol-5">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}" style="color: #364652;"><strong>Home</strong></a></li>
+                            <li class="nav-item" style="color: #364652;"><a class="nav-link" href="{{ url_for('about') }}" style="color: #364652;">About</a></li>
+                            <li class="nav-item" style="color: #364652;"><a class="nav-link" href="{{ url_for('credits') }}" style="color: #364652;">Credits</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main style="height: calc(100% - 115px);">
+            <!-- Start: 2 Rows 1+4 Columns -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12" style="padding: 8px;">
+                        <h1 class="text-center">Credits</h1>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h2>APIs</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="padding: 8px;">
+                                <div class="accordion" role="tablist" id="accordion-1">
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-1" aria-expanded="false" aria-controls="accordion-1 .item-1" style="--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-secondary-rgb: 54,70,82;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-danger: #EA4040;--bs-danger-rgb: 234,64,64;--bs-warning: #FEB548;--bs-warning-rgb: 254,181,72;">OpenWeatherAPI</button></h2>
+                                        <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-1">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-2" aria-expanded="false" aria-controls="accordion-1 .item-2">WeatherAPI</button></h2>
+                                        <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-1">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-3" aria-expanded="false" aria-controls="accordion-1 .item-3">Accordion Item</button></h2>
+                                        <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-1">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Resources</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="accordion" role="tablist" id="accordion-2">
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-1" aria-expanded="false" aria-controls="accordion-2 .item-1" style="--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-secondary-rgb: 54,70,82;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-danger: #EA4040;--bs-danger-rgb: 234,64,64;--bs-warning: #FEB548;--bs-warning-rgb: 254,181,72;">Open NLP</button></h2>
+                                        <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-2">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-2" aria-expanded="false" aria-controls="accordion-2 .item-2">POS Tagging</button></h2>
+                                        <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-2">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-3" aria-expanded="false" aria-controls="accordion-2 .item-3">Spell Check</button></h2>
+                                        <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-2">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h2>CASE Tools</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="accordion" role="tablist" id="accordion-3">
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-1" aria-expanded="false" aria-controls="accordion-3 .item-1" style="--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-secondary-rgb: 54,70,82;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-danger: #EA4040;--bs-danger-rgb: 234,64,64;--bs-warning: #FEB548;--bs-warning-rgb: 254,181,72;">Trello</button></h2>
+                                        <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-3">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-2" aria-expanded="false" aria-controls="accordion-3 .item-2">ASANA</button></h2>
+                                        <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-3">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-3" aria-expanded="false" aria-controls="accordion-3 .item-3">Everhour</button></h2>
+                                        <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-3">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Developers</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="accordion" role="tablist" id="accordion-4">
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-1" aria-expanded="false" aria-controls="accordion-4 .item-1" style="--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-secondary-rgb: 54,70,82;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-danger: #EA4040;--bs-danger-rgb: 234,64,64;--bs-warning: #FEB548;--bs-warning-rgb: 254,181,72;">Clement</button></h2>
+                                        <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-4">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-2" aria-expanded="false" aria-controls="accordion-4 .item-2">Ethan</button></h2>
+                                        <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-4">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item" style="color: #8d6346;">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-3" aria-expanded="false" aria-controls="accordion-4 .item-3">Maya</button></h2>
+                                        <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-4">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header text-warning" role="tab"><button class="accordion-button collapsed text-warning text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-4" aria-expanded="false" aria-controls="accordion-4 .item-4">Ishika</button></h2>
+                                        <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-4">
+                                            <div class="accordion-body">
+                                                <p class="mb-0" style="color: #8d6346;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End: 2 Rows 1+4 Columns -->
+        </main>
+        <footer class="footer text-center" style="padding: 10px;height: auto;">
+            <div class="container-fluid">
+                <p class="text-muted mb-0 small">Copyright &nbsp;© Sally Weather Bot 2022</p>
+            </div><a class="js-scroll-trigger scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='assets/js/stylish-portfolio.js?h=fd82ddc34ee78863a6928c678c293e4a') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $("form").on("submit", function(e) {
+                    var rawText = $("#userInput").val();
+                    var userHtml = '<p class="userMessage"><span>' + rawText + '</span></p>';
+                    $("#userInput").val("");
+                    $("#chatbox").append(userHtml);
+                    document.getElementById("messageBox").scrollIntoView({
+                        block: "start"
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>

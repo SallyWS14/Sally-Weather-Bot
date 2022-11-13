@@ -33,7 +33,6 @@ class History:
         self.date = rdate
         self.unit = unit
         self.time = time
-        return self.reply()
     
     def get_location(self, location):
         """Gets the location data from the location.json file"""

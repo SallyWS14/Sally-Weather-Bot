@@ -26,7 +26,6 @@ def extract_entity_names(t):
 
     return entity_names
 
-
 def get_entities(line):
     sentences = nltk.sent_tokenize(line)
     tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]

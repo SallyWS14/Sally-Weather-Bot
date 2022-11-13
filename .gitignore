@@ -112,3 +112,4 @@ config.json
 .vscode/launch.json
 /web/__pycache__
 /web/venv
+/web/config.json

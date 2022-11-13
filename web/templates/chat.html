@@ -22,9 +22,9 @@
         <link rel="manifest" href="/static/manifest.json">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic&amp;display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
         <link rel="stylesheet" href="/static/css/Navbar-Centered-Links-icons.css">
-        <link rel="stylesheet" type="text/css" href="/static/styles/header.css" />
-        <link rel="stylesheet" type="text/css" href="/static/styles/index.css" />
+        <link rel="stylesheet" type="text/css" href="/static/assets/index.css" /> -->
     </head>
     <body>
         <header>
@@ -51,11 +51,11 @@
                 </div>
             </nav>
         </header>
-        <main class="container" style="height: calc(100% - 115px);">
+        <main class="container" style="height: calc(100% - 115px); padding: 20px 10px;max-height:calc(100vh - 115px)">
             <div class="row g-0" style="height: 100%;">
                 <div class="col-md-5 col-lg-4 col-xl-4 col-xxl-4 d-none d-sm-none d-md-inline-flex"></div>
-                <div class="col-12 col-md-7 col-lg-8 col-xl-8 col-xxl-8">
-                    <div id="chatbox" style="height: calc(100% - 50px);background: #364652;border-radius: 16px;padding: 16px 10px;">
+                <div class="col-12 col-md-7 col-lg-8 col-xl-8 col-xxl-8" style="height:inherit">
+                    <div id="chatbox" style="height: calc(100% - 50px);background: #364652;border-radius: 16px;padding: 16px 10px; overflow-y: scroll">
                         <!-- <section style="border-style: none;padding: 4px;">
                             <p class="float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.<br /></p>
                         </section>
@@ -63,11 +63,22 @@
                             <p class="float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.<br /></p>
                         </section> -->
                     </div>
-                    <form style="height: 50px;width: 100%;position: relative;display: inline-block;" methods="POST" action="/chat">
+                    <!-- <form style="height: 50px;width: 100%;position: relative;display: inline-block;" methods="POST" action="/chat">
                         <div class="input-group" style="height: 100%;padding: 4px;">
                             <input class="form-control" type="text" name="userInput" placeholder="Hey Sally..." autofocus autocomplete="off" style="background: #364652;color: #feb548;display: inline-block;max-width: calc(100% - 50px);border-radius: 20px;border-style: none;box-shadow: 0px 0px 6px;" />
                             <button class="btn btn-primary d-inline-flex justify-content-center align-items-center align-content-center" type="submit" style="border-radius: 100%;background: #364652;position: relative;max-width: 50px;padding: 8px;margin-left: 4px;box-shadow: 0px 0px 6px #feb546;border-style: none;width: 42px;">
                                 <i class="material-icons" style="color: #feb548;text-align: center;position: relative;display: block;margin: auto;">send</i>
+                            </button>
+                        </div>
+                    </form> -->
+                    <form style="height: 50px;width: 100%;position: relative;display: inline-block;" method="POST" action="">
+                        <div class="input-group align-items-center" style="height: 100%;"><select class="form-select form-select-lg" name="mode" value="Select an option" style="border-style: none;box-shadow: 0px 0px 3px;background: #364652;color: #feb548;border-top-left-radius: 16px;border-bottom-left-radius: 16px;height: 48px;">
+                                <option value="chat" selected>Chat</option>
+                                <option value="cmd">Cmd</option>
+                            </select>
+                            <input class="form-control form-control-lg d-inline-flex" type="text" name="userInput" placeholder="Hey Sally..." autofocus autocomplete="off" style="background: #364652;color: #feb548;border-style: none;box-shadow: 0px 0px 3px;width: calc(100% - 200px);" />
+                            <button class="btn btn-primary btn-lg d-inline-flex justify-content-center align-items-center" type="submit" style="background: #364652;position: relative;box-shadow: 0px 0px 3px #feb546;border-style: none;border-bottom-right-radius: 16px;border-top-right-radius: 16px;">
+                                <i class="material-icons fs-2" style="color: #feb548;text-align: center;position: relative;display: block;margin: auto;">send</i>
                             </button>
                         </div>
                     </form>
@@ -115,10 +126,12 @@
                     e.preventDefault();
                     var rawText = $("input[name=userInput]").val();
                     var text = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    var section = $("<section class='d-flex' style='border-style: none;padding: 4px;'></section>");
-                    var p = $("<p class='float-start msg-left' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
+                    var section = $('<section class="justify-content-end " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>');
+                    var p = $('<p class="d-flex float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>');
+                    var span = $('<span class="d-flex float-end justify-content-end align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: left;height: auto;padding-right: 8px;">You</span>')
                     p.append(text);
                     section.append(p);
+                    section.append(span);
                     $("#chatbox").append(section);
                     $("input[name=userInput]").val('').focus();
                     $("#chatbox").animate({ scrollTop: $("#chatbox").prop("scrollHeight") }, 500);
@@ -127,14 +140,19 @@
                         url: "/chat",
                         type: "POST",
                         data: {
-                            userInput: rawText
+                            message: rawText
                         },
                         success: (response) => {
                             console.log(response);
-                            var section = $("<section class='d-flex' style='border-style: none;padding: 4px;'></section>");
-                            var p = $("<p class='float-end msg-right' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
-                            p.append(response);
+                            // var section = $("<section class='d-flex justify-content-start align-items-center' style='border-style: none;padding: 4px;'></section>");
+                            // var p = $("<p class='float-start msg-left' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
+                            var section = $('<section class="justify-content-start " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>')
+                            var p = $('<p class="d-flex float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>')
+                            // var span = $('<span class="d-flex justify-content-end" style="position: absolute;bottom: 0;right: 0;font-size: 12px;color: #ffffff;">Sally</span>')
+                            var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px;">Sally</span>')
+                            p.append('Sally: '+response.response);
                             section.append(p);
+                            section.append(span);
                             $("#chatbox").append(section);
                             $("#chatbox").animate({ scrollTop: $("#chatbox").prop("scrollHeight") }, 500);
                         }

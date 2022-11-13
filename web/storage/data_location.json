@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Isaac",
+        "location": "Taipei",
+        "latitude": 25.0329636,
+        "longitude": 121.5654268
+    },
+    {
+        "name": "Ethan",
+        "location": [
+            "Kelowna"
+        ],
+        "latitude": 49.8879519,
+        "longitude": -119.4960106
+    }
+]

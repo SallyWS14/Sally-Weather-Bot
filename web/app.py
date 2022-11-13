@@ -1,7 +1,7 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, request, render_template, url_for, jsonify
+# from ../SallyPython import location
 
 app = Flask(__name__)
-
 app.config.from_object('config')
 
 @app.route('/')
@@ -11,6 +11,20 @@ def index():
 @app.route('/chat')
 def chat():
     return render_template('chat.html')
+
+# receive and send responses to the chat
+@app.route('/chat', methods=['GET','POST'])
+def chat_post():
+    if request.method == 'POST':
+        message = request.form['message']
+        response = process_response(message)
+        return response
+
+def process_response(text):
+    print("Processing response")
+    # result = {'response': "What can I help you with?"}
+    result = {'response': text}
+    return jsonify(result)
 
 @app.route('/about')
 def about():
@@ -31,4 +45,5 @@ with app.test_request_context():
     print(url_for('credits'))
 
 if __name__ == '__main__':
+    # socketio.run(app, debug=True)
     app.run(debug=True)

@@ -1,0 +1,38 @@
+{
+    "intents": [
+        {
+            "tag": "weather",
+            "patterns": [
+                "what is the weather like today?",
+                "Is it cold today?",
+                "Will it be chilly today?"
+            ],
+            "responses": ["Hey", "Hello!", "How are you?", "Hi there, how can I help?"] 
+        },
+        {
+            "tag": "greeting",
+            "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Hey Sally"],
+            "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?"]
+        },
+        {
+            "tag": "history",
+            "patterns": ["What was the weather like in Kelowna a year ago?", "Was it cold 5 days ago?", "Do you remember the temparature 3 months ago in Alabama"],
+            "responses": ["One sec...", "Pulling up weather data for Kelowna a year ago today", "Give me a second please..."]
+        },
+        {
+            "tag": "dresssense",
+            "patterns": ["What should I wear today since it's cold out?", "Do you recommend a hat and gloves today?", "Should I wear a jacket today?", "Sweats or shorts today?", "Hey Sally, what should I wear today?"],
+            "responses": ["Pulling up recommendations for you based on the weather now...", "I will suggest something for you based on the current weather at your location"]
+        },
+        {
+            "tag": "stormwatch",
+            "patterns": ["Is there a storm tonight?", "Are there any alerts of a hurricane?", "Will there be a tornado today?", "Is there a storm warning?", "Is there a storm watch?"],
+            "responses": ["Pulling up storm data for you...", "I will check the weather radar for you"]
+        },
+        {
+            "tag": "time",
+            "patterns": ["What time is it?", "What is the time?", "What's the time?", "What time is it now?"],
+            "responses": ["The current time is...", "It is currently...", "The time is...", "Getting exact time..."]
+        }
+    ]
+}

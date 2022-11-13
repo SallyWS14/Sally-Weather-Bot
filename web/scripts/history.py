@@ -27,7 +27,7 @@ def getLocation(name, lookfor='location'):
         
 
 class History:
-    def __init__(self, location = getLocation(socket.gethostbynamne(socket.gethostname())), rdate = datetime.datetime.now().date(), unit = 'C', time = datatime.datetime.now().hour):
+    def __init__(self, location = getLocation(socket.gethostbynamne(socket.gethostname())), rdate = datetime.datetime.now().date(), unit = 'C', time = datetime.datetime.now().hour):
         self.url = config['history']['url']
         self.location = location
         self.date = rdate

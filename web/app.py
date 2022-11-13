@@ -22,6 +22,11 @@ def chat_post():
 
 def process_response(text):
     print("Processing response")
+    """
+    response: "The bot message",
+    command: "history",
+    data: [list of data]
+    """
     # result = {'response': "What can I help you with?"}
     result = {'response': text}
     return jsonify(result)

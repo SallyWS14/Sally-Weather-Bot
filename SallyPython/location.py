@@ -15,15 +15,8 @@ nltk.download("words")
 
 # TODO: Named Entity Recognition, Spelling check
 
-name = input("Enter your name: ")
-print("Hello", name)
-loc = input("Please input your location: ")
-print(loc)
-
-
 def extract_entity_names(t):
     entity_names = []
-
     if hasattr(t, "label") and t.label:
         if t.label() == "NE":
             entity_names.append(" ".join([child[0] for child in t]))
@@ -47,41 +40,50 @@ def get_entities(line):
     print(entities)
     return entities
 
-gmaps = googlemaps.Client(key="AIzaSyD1Ae_641pTLg2f_X2ElsRq21a5BYKNBlw")
-# Geocoding an address
-geocode_result = gmaps.geocode(get_entities(loc))
-print(
-    "Latitude: "
-    + str(geocode_result[0]["geometry"]["location"]["lat"])
-    + "\nLongitude: "
-    + str(geocode_result[0]["geometry"]["location"]["lng"])
-)
-used = False
-with open("data_location.json", "r") as infile:
-    geo = json.load(infile)
-    # print(geo)
-for names in geo:
-    if names["name"] == name:
-        print("You already have an account!")
-        used = True
-        break
-data = {
-    "name": name,
-    "location": get_entities(loc),
-    "latitude": geocode_result[0]["geometry"]["location"]["lat"],
-    "longitude": geocode_result[0]["geometry"]["location"]["lng"],
-}
-
-if used == False:
-    geo.append(data)
-else:
+def get_location():
+    name = input("Enter your name: ")
+    print("Hello", name)
+    loc = input("Please input your location: ")
+    print(loc)
+    gmaps = googlemaps.Client(key="AIzaSyD1Ae_641pTLg2f_X2ElsRq21a5BYKNBlw")
+    # Geocoding an address
+    geocode_result = gmaps.geocode(get_entities(loc))
+    print(
+        "Latitude: "
+        + str(geocode_result[0]["geometry"]["location"]["lat"])
+        + "\nLongitude: "
+        + str(geocode_result[0]["geometry"]["location"]["lng"])
+    )
+    used = False
+    with open("data_location.json", "r") as infile:
+        geo = json.load(infile)
+        # print(geo)
     for names in geo:
         if names["name"] == name:
-            geo.remove(names)
-            geo.append(data)
+            print("You already have an account!")
+            used = True
             break
+    data = {
+        "name": name,
+        "location": get_entities(loc),
+        "latitude": geocode_result[0]["geometry"]["location"]["lat"],
+        "longitude": geocode_result[0]["geometry"]["location"]["lng"],
+    }
 
-json_obj = json.dumps(geo, indent=4)
+    if used == False:
+        geo.append(data)
+    else:
+        for names in geo:
+            if names["name"] == name:
+                geo.remove(names)
+                geo.append(data)
+                break
 
-with open("data_location.json", "w") as f:
-    f.write(json_obj)
+    json_obj = json.dumps(geo, indent=4)
+
+    with open("data_location.json", "w") as f:
+        f.write(json_obj)
+
+    return data
+
+print(get_location())

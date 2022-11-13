@@ -1,0 +1,9 @@
+import unittest
+
+class TestHistory(unittest.TestCase):
+    def testHistory(self):
+        # Test that the history is working
+        self.failUnlessEqual(1, 1)
+        
+if __name__ == '__main__':
+    

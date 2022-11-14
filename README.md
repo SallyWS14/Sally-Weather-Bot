@@ -6,11 +6,21 @@ Provides you with accurate weather data on demand.
 
 ## Running
 
-- Add the bot to your server using this authentication link:
-  [Sally Authentication](https://discord.com/api/oauth2/authorize?client_id=1021956341872472074&permissions=8&scope=bot)
-- Download the `config.json` file to your computer and move it to the same directory as the index.js file
-- Run `npm install` to install the required packages
-- Run `npm start` to start the bot
+- Clone the git repo
+- Switch to web branch
+- Run ``pip install -r requirements.txt``
+- Load the config file
+
+* **Activate the python environment**
+  - `python3 -m venv venv`
+  - `. venv/Scripts/activate`
+    **Install requirements**
+  - `pip install -r requirements.txt`
+    **Start the program**
+  - `flask run` **(edited)**
+
+- Go to localhost:5000
+
 
 ## Features
 

@@ -7,8 +7,9 @@ with open('../storage/config.json', 'r') as configfile:
 with open('../storage/data_location.json', 'r') as locationJson:
     location = json.load(locationJson)
     
+    
 url1 = "https://api.openweathermap.org/data/2.5/weather?lat="
-city = "Kelowna"
+
 
 #Default lat and lon is Kelowna
 lat = "49.88"
@@ -20,7 +21,15 @@ URL = url1 + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric"
 
 response = requests.get(URL)
 
+#Grab current users latitude and longitude
+def getLocation():
+    lat = location[0]['latitude']
+    lon = location[0]['latitude']
+
+
 def getDressSense():
+    getLocation()
+    
     if response.status_code == 200: 
         data = response.json()
         main = data['main']

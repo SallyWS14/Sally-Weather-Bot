@@ -33,7 +33,7 @@
                 <div class="container">
                     <a class="navbar-brand d-flex align-items-center" href="#">
                         <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: #8d6346;padding: 4px;">
-                            <img class="img-fluid" src="{{ url_for('static', filename='assets/img/sally_v1_Asset%201.png?h=7d4249cf5cb4a36225d6e8089d5695f0') }}" width="90%" loading="eager">
+                            <img class="img-fluid" src="{{ url_for('static', filename='/img/sally_v1_Asset%201.png?h=7d4249cf5cb4a36225d6e8089d5695f0') }}" width="90%" loading="eager">
                         </span>
                         <span style="color: #feb548;">Sally: The Weather Bot</span>
                     </a>
@@ -128,7 +128,7 @@
                     var text = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     var section = $('<section class="justify-content-end " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>');
                     var p = $('<p class="d-flex float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>');
-                    var span = $('<span class="d-flex float-end justify-content-end align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: left;height: auto;padding-right: 8px;">You</span>')
+                    var span = $('<span class="d-flex float-end justify-content-end align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: left;height: auto;padding-right: 8px; padding-bottom: 8px">You</span>')
                     p.append(text);
                     section.append(p);
                     section.append(span);
@@ -149,8 +149,10 @@
                             var section = $('<section class="justify-content-start " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>')
                             var p = $('<p class="d-flex float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>')
                             // var span = $('<span class="d-flex justify-content-end" style="position: absolute;bottom: 0;right: 0;font-size: 12px;color: #ffffff;">Sally</span>')
-                            var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px;">Sally</span>')
-                            p.append('Sally: '+response.response);
+                            var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px; padding-bottom:8px">Sally</span>')
+                            if (response.response) {
+                                p.append(response.context + ": " + response.response);
+                            }
                             section.append(p);
                             section.append(span);
                             $("#chatbox").append(section);

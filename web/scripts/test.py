@@ -141,3 +141,21 @@ def main():
     return None
 
 main()
+
+# Determine the tense of the sentence
+# Determine the context [dressSense, weather, location, history, stormwatch]
+# If the user's ip matches an ip in the ../storage/location.json file, use that location as the default unless specified in the sentence
+# if sentence contains anything related to clothes or asking for a recommendation
+# - get the weather information and return a recommendation based on the weather data
+# if sentence contains anything related to weather
+# - if the tense is past, return the weather history data for that day
+# - if the tense is future, return the forecast data
+# - if present, return the current weather data
+# if the user specifies a location, save the location to the ../storage/location.json using the following format:
+# {"ip": user_ip, "location": locationFromSentence, "lat": latitudeFromLocation, "lng": longitudeFromLocation}
+# if the user already has a location saved, updated the location information
+# if the user requests stomwatch information, return the stormwatch information
+# Use openweatherapi to get the current weather information
+# Use weatherapi to get the history, or future weather data
+# return the response as a json file using the following format:
+# {"context": context, "response": messageOrRecommendation, data: weatherData}

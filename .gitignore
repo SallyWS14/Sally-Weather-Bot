@@ -113,3 +113,4 @@ config.json
 /web/__pycache__
 /web/venv
 /web/config.json
+web/stanford-corenlp-latest.zip

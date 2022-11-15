@@ -39,9 +39,16 @@ def getDressSense():
         windSpeed = data['wind']['speed']
         report = data['weather']
         isRaining = "rain" in report[0]['description']
-   
-        w = "I recommend you wear:"
-        wear = rewordSentence.getRewordSentence(w) + "\n"
+        
+        
+        
+        w = "I recommend you wear: \n"
+        try:
+            wear = rewordSentence.getRewordSentence(w) + "\n"
+        except:
+            wear = "I recommend you wear:  \n"
+            print('there was an error with running rewordSentence')
+            
    
         def checkIfWindy():
             if (windSpeed):
@@ -72,6 +79,12 @@ def getDressSense():
             wear = wear + ("- a short sleeved shirt \n") + ("- shorts \n")
             if(clouds<40):
                  wear = wear + ('- a hat \n') + ('- sunglasses \n')
+                 
+        try:
+            wear = wear + sentimentNLTK.isNegOrIsPos(wear)
+        except:
+            print('there was an error with running sentimentNLTK')
+         
                  
         return wear
     else:

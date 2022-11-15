@@ -1,5 +1,6 @@
 # importing requests and json
 import requests, json
+import rewordSentence
 
 with open('../storage/config.json', 'r') as configfile:
     config = json.load(configfile)
@@ -7,9 +8,7 @@ with open('../storage/config.json', 'r') as configfile:
 with open('../storage/data_location.json', 'r') as locationJson:
     location = json.load(locationJson)
     
-    
 url1 = "https://api.openweathermap.org/data/2.5/weather?lat="
-
 
 #Default lat and lon is Kelowna
 lat = "49.88"
@@ -22,6 +21,7 @@ URL = url1 + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric"
 response = requests.get(URL)
 
 #Grab current users latitude and longitude
+
 def getLocation():
     lat = location[0]['latitude']
     lon = location[0]['latitude']
@@ -40,7 +40,8 @@ def getDressSense():
         report = data['weather']
         isRaining = "rain" in report[0]['description']
    
-        wear = "I recommend you wear:\n"
+        w = "I recommend you wear:"
+        wear = rewordSentence.getRewordSentence(w) + "\n"
    
         def checkIfWindy():
             if (windSpeed):

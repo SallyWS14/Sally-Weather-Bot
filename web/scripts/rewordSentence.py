@@ -1,5 +1,6 @@
 #User: I don't understand could you re word that 
-#Sally -> finds the longest word and replaces it with a synonym 
+#Sally -> returns new sentence 
+#Either grab last sentence sally sent 
 
 import random
 import nltk
@@ -9,7 +10,6 @@ nltk.download('omw-1.4')
 
 sentence = "I recommend you wear"  
 
-#Grab last sentence sally sent or ask user what they would like us to reword
 #Takes sentence and returns the sentence reworded using synonym tool kit
 def getRewordSentence(userSentence):
     if not len(userSentence):

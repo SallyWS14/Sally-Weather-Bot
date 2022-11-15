@@ -1,7 +1,7 @@
 import json
 from pycorenlp import StanfordCoreNLP
 
-# Sally asks for feedback // Leave a review about our chatbot
+#If user says "I would like to leave a review"
 
 nlp = StanfordCoreNLP('http://localhost:9000')
 userInput = "I like this chocolate. This chocolate is not good. The chocolate is delicious. Its a very tasty chocolate. This is so bad"
@@ -39,4 +39,3 @@ def createSentimentReply(usersReply):
 
 print(createSentimentReply(userInput))
 
- #Test user response is negative

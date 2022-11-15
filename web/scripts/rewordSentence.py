@@ -1,6 +1,4 @@
-#User: I don't understand could you re word that 
-#Sally -> returns new sentence 
-#Either grab last sentence sally sent 
+#returns new sentence  
 
 import random
 import nltk

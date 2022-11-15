@@ -52,5 +52,5 @@ def getRewordSentence(userSentence):
     return newSentence
     
 
-print(getRewordSentence(sentence))
+# print(getRewordSentence(sentence))
 

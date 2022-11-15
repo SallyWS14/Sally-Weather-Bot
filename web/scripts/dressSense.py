@@ -1,11 +1,11 @@
 # importing requests and json
 import requests, json
-import rewordSentence
+from scripts import rewordSentence
 
 with open('../config.json', 'r') as configfile:
     config = json.load(configfile)
     
-with open('../storage/data_location.json', 'r') as locationJson:
+with open('./storage/data_location.json', 'r') as locationJson:
     location = json.load(locationJson)
     
 url1 = "https://api.openweathermap.org/data/2.5/weather?lat="
@@ -77,5 +77,5 @@ def getDressSense():
     else:
         return("Sorry there was an error")
     
-print(getDressSense())
+# print(getDressSense())
  

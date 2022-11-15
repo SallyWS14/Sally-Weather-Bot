@@ -90,11 +90,11 @@ def process_response(text):
                 # descs = weatherData["weather"][0]["main"]
                 rec = dressSense.getDressSense()
                 result = {"response": rec, "context": context, "data": weatherData}
+            elif context == "history":
+                result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
             elif context == "weather":
                 # result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
                 result = {'response': weather.get_weather(location['lat'], location['lng']), "context": context}
-            elif context == "history":
-                result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
             elif context == "stormwatch":
                 # result = {"response": "UNable to load stormwatch data", "context": context}
                 result = {'response': get_stormwatch(location['latitude'], location['longitude']), "context": context}

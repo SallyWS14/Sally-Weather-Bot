@@ -9,4 +9,4 @@ Provides you with accurate weather data on demand.
 - You can now properly communicate with the system. Say good bye to that robotic feelings of /command and hello to the new and improved, Sally: The Weather Bot (on the web).
 
 ## More Information
-- [Config File](./README.md)
+- [UPDATED README (readme1.md)](./README1.md)

@@ -41,7 +41,13 @@ Provides you with accurate weather data on demand.
 - DressSense
 
   - This commands gives the user recommendations on what to wear based on the weather (specifically temperature, precipitation, cloudiness, and windiness) if they ask
+<<<<<<< HEAD
   - Synonym and Sentiment Analysis to know whether the sentence is positive or negative
+=======
+  - Uses a synonyms toolkit to reword given recommendation each time. This makes our bot seem more natural in conversation 
+  - Uses a sentiment analysis to see if given recommendation indicates good or bad weather, bot adds a message depending on this indication. This feature makes our bot seem more personal 
+
+>>>>>>> 35521535fcbf80df36632b98ba9d8682eca92e51
 - StormWatch - _**COMING SOON**_
 - Location
 

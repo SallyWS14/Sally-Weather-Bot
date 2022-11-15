@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, url_for, jsonify
 import spacy
 # from ../SallyPython import location
-from scripts import weatherbot, bot2, bot, history
+from scripts import history, dressSense, weather
 import socket
 import re
 from spacy.tokenizer import Tokenizer
@@ -67,11 +67,11 @@ def process_response(text):
     # sbot = bot.main(text.form['message'], socket.gethostbyname(socket.gethostname()))
     # bot = bot2.main(text.form['message'])
     result = ""
-    current_context = get_context(text.form['message'])
+    current_context = get_context(text.form['message'])[0]
     cbsession = "Sally_"+find_location_by_ip()["location"]
     print(get_context)
     print(getSentenceTense)
-    if current_context == "" or current_context is not None:
+    if current_context == "" or current_context is None:
         # result = cb.say(text)
         msgHistory.append(text.form['message'])
         result = cb.cleverbot(text.form['message'], msgHistory, cbsession)
@@ -81,49 +81,25 @@ def process_response(text):
         print(contexts)
         # location = findhas_country(text.form["message"])
         location = find_location_by_ip()
-        print(location)
+        # print(location)
         if len(contexts) > 0:
             for context in contexts:
                 if context == "dressSense":
                     weatherData = getWeather()
                     descs = weatherData["weather"][0]["main"]
-                    rec = ""
-                    for desc in descs:
-                        desc = desc.lower()
-                        if desc == "sunny":
-                            rec = "Wear some sunglasses and a light Tee"
-                        elif desc == "fog":
-                            rec = "Take some sunglasses with you"
-                        elif desc == "haze":
-                            rec = "Wear some eye protectors and a hat, bring a mask with you as well"
-                        elif desc == "smoke":
-                            rec = "Wear some eye protectors and a hat, bring a mask with you as well"
-                        elif desc == "rain":
-                            rec = "Bring a rain coat with you or an umbrella"
-                        elif desc == "clouds":
-                            rec = "You should be fine with a coat"
-                        elif desc == "clear":
-                            rec = "Wear something light!"
-                        elif desc == "drizzle":
-                            rec = "Carry an umbrella with you just in case!"
-                        elif desc == "thunderstorm":
-                            rec = "You will need an umbrella and waterproof shoes and a coat"
-                        elif desc == "snow":
-                            rec = "Bring a jacket and wear some warm clothes"
-                        elif desc == "mist":
-                            rec = "Bring"
-                        else:
-                            rec = "Some clothes would be nice!"
+                    rec = dressSense()
+                    return {"response": rec, "context": context, "data": weatherData}
                 elif context == "weather":
-                    result = history.History(text = text.form['message'], tense=getSentenceTense(text), location=location).reply()
+                    # result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
+                    result = {'response': weather.get_weather(), "context": context}
                 elif context == "stormwatch":
                     result = {"response": "UNable to load stormwatch data", "context": context}
                 elif context == "location":
                     result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
                 elif context == "future":
-                    result = history.History(text = text.form['message'], tense=getSentenceTense(text), location=location).reply()
+                    result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
                 elif context == "history":
-                    result = history.History(text = text.form['message'], tense=getSentenceTense(text), location=location).reply()
+                    result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
                 elif context == "conversation":
                     msgHistory.append(text)
                     result = cb.cleverbot(text.form['message'], msgHistory, cbsession)
@@ -145,32 +121,33 @@ def has_country(text):
     places = GeoText(text)
     for city in places.cities:
         locations.append(city)
-    # for country in locations.country_mentions:
-    #     locations.append(country.values())
+                    # for country in locations.country_mentions:`````````````````````````````````````````````````
+                    #     locations.append(country.values())`````````````````````````````````````````````````
     return locations
 
 def get_context(text):
     """returns context from text"""
     tokens = appnlp(text)
     valid_contexts = {
-            "dressSense" : ["recommend", "dress", "clothes", "wear", "put on"],
-            "weather" : ["weather", "cold", "chill", "warm", "cool", "temperature", "humidity", "breeze", "wind"],
-            "stormwatch" : ["stormwatch", "storm", "thunder", "snowfall", "snow", "typhoon"],
-            "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"]
-        }
-    rcontext = set([])
+        "dressSense" : ["recommend", "dress", "clothes", "wear", "put on"],
+        "weather" : ["weather", "cold", "chill", "warm", "cool", "temperature", "humidity", "breeze", "wind"],
+        "stormwatch" : ["stormwatch", "storm", "thunder", "snowfall", "snow", "typhoon", "alerts"],
+        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"]
+    }
+    rcontext = []
     if getSentenceTense(text) == "past":
-        rcontext.add("history")
+        rcontext.append("history")
     elif getSentenceTense(text) == "future":
-        rcontext.add("future")
+        rcontext.append("future")
     else:
         for token in tokens:
             for context in valid_contexts:
                 if token.tag_ in valid_contexts[context]:
-                    rcontext.add(context)
+                    rcontext.append(context)
                     break
                 else:
-                    rcontext.add("conversation")
+                    rcontext.append("conversation")
+    rcontext = list(dict.fromkeys(rcontext))
     return rcontext
 
 def getSentenceTense(sentence):
@@ -179,8 +156,11 @@ def getSentenceTense(sentence):
     for token in sentence:
         if token.tag_ == "VBD" or token.tag_ == "VBN" or token.tag_ == "VBP":
             sentenceTense = "past"
-        if token.tag_ == "VBG" or token.tag_ == "VBZ":
+            print(token.text)
+        # if token.tag_ == "VBG" or token.tag_ == "VBZ":
+        if token.tag_ == "VBZ":
             sentenceTense = "future"
+            print(token.text)
     return sentenceTense
 
 def save_location(loc, lat, lon):
@@ -228,7 +208,7 @@ def find_location_by_ip():
         # print(res)
         return res
 
-def getWeather(self):
+def getWeather():
     userIp = ip
     myloc = new_location() if get_location() is None else get_location()
     openWeatherMapParams = {

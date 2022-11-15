@@ -47,12 +47,12 @@ class History:
         r.raise_for_status()
         countries = r.json()
         self.nlp = English()
-        self.countries = {c["name"]: c for c in countries}
-        self.matcher = PhraseMatcher(sp.vocab)
-        self.matcher.add("COUNTRIES", [self.nlp.make_doc(c) for c in self.countries.keys()])
-        Span.set_extension("is_country", default=None)
-        Span.set_extension("country_capital", default=None)
-        Doc.set_extension("has_country", default=None)
+        # self.countries = {c["name"]: c for c in countries}
+        # self.matcher = PhraseMatcher(sp.vocab)
+        # self.matcher.add("COUNTRIES", [self.nlp.make_doc(c) for c in self.countries.keys()])
+        # Span.set_extension("is_country", default=None)
+        # Span.set_extension("country_capital", default=None)
+        # Doc.set_extension("has_country", default=None)
         self.location = location
         self.date = rdate
         self.unit = unit

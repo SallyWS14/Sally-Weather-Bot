@@ -10,6 +10,7 @@ synonyms= []
 for syn in wordnet.synsets('weather'):
     for lemma in syn.lemmas():
         synonyms.append(lemma.name())
+<<<<<<< HEAD
     print(synonyms)
 for syn in wordnet.synsets('atmosphere'):
     for lemma in syn.lemmas():
@@ -23,6 +24,21 @@ for syn in wordnet.synsets('temperature'):
     for lemma in syn.lemmas():
         synonyms.append(lemma.name())
     print(synonyms)
+=======
+    print("Synonym of weather is"+ synonyms)
+for syn in wordnet.synsets('atmosphere'):
+    for lemma in syn.lemmas():
+        synonyms.append(lemma.name())
+    print("Synonym of atmosphere is"+ synonyms)
+for syn in wordnet.synsets('climate'):
+    for lemma in syn.lemmas():
+        synonyms.append(lemma.name())
+    print("Synonym of climate is" + synonyms)
+for syn in wordnet.synsets('temperature'):
+    for lemma in syn.lemmas():
+        synonyms.append(lemma.name())
+    print("Synonym of temperature is" + synonyms)
+>>>>>>> f6c7c3ad2de931128c4aa54fa712b8e902de67e9
 
 #def text_parser_synonym_antonym_extractor(weather):
    #from nltk.corpus import wordnet

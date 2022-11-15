@@ -2,7 +2,7 @@
 import requests, json
 import rewordSentence
 
-with open('../storage/config.json', 'r') as configfile:
+with open('../config.json', 'r') as configfile:
     config = json.load(configfile)
     
 with open('../storage/data_location.json', 'r') as locationJson:

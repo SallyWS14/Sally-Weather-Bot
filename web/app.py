@@ -54,11 +54,18 @@ def chat():
 # receive and send responses to the chat
 @app.route('/chat', methods=['GET','POST'])
 def chat_post():
+    print(request)
+    print(request.form)
+    # print(request.form['userInput'])
     if request.method == 'POST':
         message = request.form['message']
         ip = socket.gethostbyname(socket.gethostname())
+        print(ip)
         response = process_response(request)
+        print(response)
         return response
+    # else :
+    #     return render_template('chat.html')
 
 def process_response(text):
     print("Processing response")
@@ -74,8 +81,10 @@ def process_response(text):
     # sbot = bot.main(text.form['message'], socket.gethostbyname(socket.gethostname()))
     # bot = bot2.main(text.form['message'])
     result = ""
-    current_context = get_context(text.form['message'])
+    msg = text.form['message']
+    current_context = get_context(msg)
     cbsession = "Sally_"+find_location_by_ip()["location"]
+    print(cbsession)
     print(get_context)
     print(getSentenceTense)
     contexts = get_context(text.form["message"])
@@ -91,9 +100,9 @@ def process_response(text):
                 rec = dressSense.getDressSense()
                 result = {"response": rec, "context": context, "data": weatherData}
             elif context == "history":
-                result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
+                result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
             elif context == "weather":
-                # result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
+                # result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
                 result = {'response': weather.get_weather(location['lat'], location['lng']), "context": context}
             elif context == "stormwatch":
                 # result = {"response": "UNable to load stormwatch data", "context": context}
@@ -101,10 +110,10 @@ def process_response(text):
             elif context == "location":
                 result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
             elif context == "future":
-                result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
+                result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
             else:
                 msgHistory.append(text)
-                result = cb.cleverbot(text.form['message'], session=cbsession)
+                result = cb.cleverbot(msg, session=cbsession)
                 result = {'response': result, 'context': current_context}
     print(result)
     return jsonify(result)
@@ -199,7 +208,7 @@ def new_location():
         return newLoc
 
 def find_location_by_ip():
-    with req.urlopen("https://geolocation-db.com/json/"+ip) as locdata:
+    with req.urlopen("https://geolocation-db.com/json/&ip="+ip) as locdata:
         data = json.loads(locdata.read().decode())
         # print(data)
         lat = data["latitude"]

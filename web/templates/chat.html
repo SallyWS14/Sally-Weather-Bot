@@ -155,7 +155,8 @@
 							if (response.context) {
 								// Sally - '+((response.context) ? response.context : "Could not get context")+'
 								// if response.context is an array has more than 1 items, join by comma, else just use response.context
-								span.append((Array.isArray(response.context) && response.context.length > 1) ? response.context.join(", ") : response.context);
+								let ctxt = (Array.isArray(response.context) && response.context.length > 1) ? response.context.join(", ") : response.context;
+								span.append('Sally - ' + ctxt);
 							} else {
 								span.append("Sally");
 							}

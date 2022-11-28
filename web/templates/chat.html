@@ -151,7 +151,14 @@
 							var section = $('<section class="justify-content-start " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>')
 							var p = $('<p class="d-flex float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>')
 							// var span = $('<span class="d-flex justify-content-end" style="position: absolute;bottom: 0;right: 0;font-size: 12px;color: #ffffff;">Sally</span>')
-							var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px; padding-bottom:8px">Sally - '+((response.context) ? response.context : "Could not get context")+'</span>')
+							var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px; padding-bottom:8px"></span>')
+							if (response.context) {
+								// Sally - '+((response.context) ? response.context : "Could not get context")+'
+								// if response.context is an array has more than 1 items, join by comma, else just use response.context
+								span.append((Array.isArray(response.context) && response.context.length > 1) ? response.context.join(", ") : response.context);
+							} else {
+								span.append("Sally");
+							}
 							if (response.response) {
 								// p.append(response.context[0] + ": " + response.response);
 								p.append(`${response.response}`)

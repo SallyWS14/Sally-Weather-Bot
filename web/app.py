@@ -209,7 +209,9 @@ def new_location():
 
 def find_location_by_ip():
     with req.urlopen("https://geolocation-db.com/json/&ip="+ip) as locdata:
+        print(locdata)
         data = json.loads(locdata.read().decode())
+        print(data)
         # print(data)
         lat = data["latitude"]
         long = data["longitude"]

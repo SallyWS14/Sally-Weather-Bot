@@ -215,7 +215,18 @@ def find_location_by_ip():
         # print(data)
         lat = data["latitude"]
         long = data["longitude"]
-        location = data["city"] + ", " + data["state"] + ", " + data["country_name"]
+        # check if city state and country_name are not None
+        location = ""
+        if data["city"] is not None and data["state"] is not None and data["country_name"] is not None:
+            location = data["city"] + ", " + data["state"] + ", " + data["country_name"]
+        elif data["city"] is not None and data["country_name"] is not None:
+            location = data["city"] + ", " + data["country_name"]
+        elif data["state"] is not None and data["country_name"] is not None:
+            location = data["state"] + ", " + data["country_name"]
+        elif data["country_name"] is not None:
+            location = data["country_name"]
+        else:
+            location = "Earth"
         res = {"ip": ip, "lat": lat, "lng": long, "location": location}
         # print(res)
         return res

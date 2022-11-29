@@ -23,7 +23,7 @@ pic_response = requests.get(pic_base, params=pic_params)
 for key, value in pic_response.headers.items():
     print(f"{key}: {value}")
 
-with open('street.jpg', 'wb') as file:
+with open('imgstreet.jpg', 'wb') as file:
     file.write(pic_response.content)
 # remember to close the response connection to the API
 pic_response.close()
@@ -31,6 +31,6 @@ pic_response.close()
 # using matpltolib to display the image
 
 plt.figure(figsize=(10, 10))
-img=mpimg.imread('street.jpg')
+img=mpimg.imread('imgstreet.jpg')
 imgplot = plt.imshow(img)
 plt.show()

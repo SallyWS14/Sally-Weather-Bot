@@ -112,9 +112,9 @@ class History:
         time = time if time is not None else datetime.datetime.now().hour
         # get the weather data
         mtense = "current"
-        if self.tense is "history":
+        if self.tense == "history":
             mtense = "history"
-        elif self.tense is "future":
+        elif self.tense == "future":
             mtense = "future"
         else:
             mtense = mtense

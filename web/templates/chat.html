@@ -1,167 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Chat - Sally Weather Bot</title>
-        <meta charset="utf-8">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, minimal-ui" /> -->
-        <meta name="theme-color" content="#faf3dd">
-        <meta name="twitter:title" content="Sally Weather Bot">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta property="og:image" content="/static/img/sally_v1_Asset 1.png">
-        <meta property="og:type" content="website">
-        <meta name="twitter:image" content="/static/img/sally_v1_Asset 1.png">
-        <link rel="icon" type="image/png" sizes="48x56" href="/static/img/sally_v1_Asset 1@0.5x.png">
-        <link rel="icon" type="image/png" sizes="48x56" href="/static/img/sally_v1_Asset 1@0.5x.png">
-        <link rel="icon" type="image/png" sizes="96x113" href="/static/img/sally_v1_Asset 1-1.png">
-        <link rel="icon" type="image/png" sizes="192x225" href="/static/img/sally_v1_Asset 1@2x.png">
-        <link rel="icon" type="image/png" sizes="382x448" href="/static/img/sally_v1_Asset 1@4x.png">
-        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-        <link rel="manifest" href="/static/manifest.json">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic&amp;display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
-        <link rel="stylesheet" href="/static/css/Navbar-Centered-Links-icons.css">
-        <link rel="stylesheet" type="text/css" href="/static/assets/index.css" />
-    </head>
-    <body>
-        <header>
-            <!-- Start: Navbar Right Links (Dark) -->
-            <nav class="navbar navbar-dark navbar-expand-md py-3" style="background: #faf3dd;">
-                <div class="container">
-                    <a class="navbar-brand d-flex align-items-center" href="#">
-                        <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: #8d6346;padding: 4px;">
-                            <img class="img-fluid" src="{{ url_for('static', filename='/img/sally_v1_Asset 1.png') }}" width="90%" loading="eager">
-                        </span>
-                        <span style="color: #feb548;">Sally: The Weather Bot</span>
-                    </a>
-                    <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5">
-                        <span class="visually-hidden">Toggle navigation</span>
-                        <span class="navbar-toggler-icon" style="color: #8d6346;--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-body-bg: #FAF3DD;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-secondary-rgb: 54,70,82;"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navcol-5">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}" style="color: #364652;"><strong>Home</strong></a></li>
-                            <li class="nav-item" style="color: #364652;"><a class="nav-link" href="{{ url_for('about') }}" style="color: #364652;">About</a></li>
-                            <li class="nav-item" style="color: #364652;"><a class="nav-link" href="{{ url_for('credits') }}" style="color: #364652;">Credits</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <main class="container" style="height: calc(100% - 115px); padding: 20px 10px;max-height:calc(100vh - 115px)">
-            <div class="row g-0" style="height: 100%;">
-                <div class="col-md-5 col-lg-4 col-xl-4 col-xxl-4 d-none d-sm-none d-md-inline-flex"></div>
-                <div class="col-12 col-md-7 col-lg-8 col-xl-8 col-xxl-8" style="height:inherit">
-                    <div id="chatbox" style="height: calc(100% - 50px);background: #364652;border-radius: 8px;padding: 8px; overflow-y: scroll">
-                        <!-- <section style="border-style: none;padding: 4px;">
-                            <p class="float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.<br /></p>
-                        </section>
-                        <section style="border-style: none;padding: 4px;">
-                            <p class="float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.<br /></p>
-                        </section> -->
-                    </div>
-                    <!-- <form style="height: 50px;width: 100%;position: relative;display: inline-block;" methods="POST" action="/chat">
-                        <div class="input-group" style="height: 100%;padding: 4px;">
-                            <input class="form-control" type="text" name="userInput" placeholder="Hey Sally..." autofocus autocomplete="off" style="background: #364652;color: #feb548;display: inline-block;max-width: calc(100% - 50px);border-radius: 20px;border-style: none;box-shadow: 0px 0px 6px;" />
-                            <button class="btn btn-primary d-inline-flex justify-content-center align-items-center align-content-center" type="submit" style="border-radius: 100%;background: #364652;position: relative;max-width: 50px;padding: 8px;margin-left: 4px;box-shadow: 0px 0px 6px #feb546;border-style: none;width: 42px;">
-                                <i class="material-icons" style="color: #feb548;text-align: center;position: relative;display: block;margin: auto;">send</i>
-                            </button>
-                        </div>
-                    </form> -->
-                    <form style="height: 50px;width: 100%;position: relative;display: inline-block;" method="POST" action="">
-                        <div class="input-group align-items-center" style="height: 100%;"><select class="form-select form-select-lg" name="mode" value="Select an option" style="border-style: none;box-shadow: 0px 0px 3px;background: #364652;color: #feb548;border-top-left-radius: 16px;border-bottom-left-radius: 16px;height: 48px;">
-                                <option value="chat" selected>Chat</option>
-                                <option value="cmd">Cmd</option>
-                            </select>
-                            <input class="form-control form-control-lg d-inline-flex" type="text" name="userInput" placeholder="Hey Sally..." autofocus autocomplete="off" style="background: #364652;color: #feb548;border-style: none;box-shadow: 0px 0px 3px;width: calc(100% - 200px);" />
-                            <button class="btn btn-primary btn-lg d-inline-flex justify-content-center align-items-center" type="submit" style="background: #364652;position: relative;box-shadow: 0px 0px 3px #feb546;border-style: none;border-bottom-right-radius: 16px;border-top-right-radius: 16px;">
-                                <i class="material-icons fs-2" style="color: #feb548;text-align: center;position: relative;display: block;margin: auto;">send</i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </main>
-        <footer class="footer text-center" style="padding: 10px;height: auto;">
-            <div class="container-fluid">
-                <p class="text-muted mb-0 small">Copyright &nbsp;© Sally Weather Bot 2022</p>
-            </div><a class="js-scroll-trigger scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>
-        </footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/static/js/stylish-portfolio.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.min.js" integrity="sha512-GtM/5c/Ie0lStj6QwEG0HkpMQuGr9vrOAgFD4nNmImviyZvsJxN7TYU7b+R7Kthob0zFBUpuxfl3R3Mn1qekTw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-        <script>
-            $(document).ready(function() {
-                // var socket = io.connect('http://' + document.domain + ':' + location.port);
-                // socket.on('connect', () => {
-                //     socket.emit('chatMsg', {
-                //         data: 'User Connected'
-                //     });
-                //     socket.on('my response', (msg) => {
-                //         // console.log(msg);
-                //         var text = msg.message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                //         var section = $("<section class='d-flex' style='border-style: none;padding: 4px;'></section>");
-                //         var p = $("<p class='float-end msg-right' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
-                //         p.append(text);
-                //         section.append(p);
-                //         $("#chatbox").append(section);
-                //     });
-                // });
-                
-                // $("form").on("submit", function(e) {
-                //     e.preventDefault();
-                //     var rawText = $("input[name=userInput]").val();
-                //     var text = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                //     $("input[name=userInput]").val('').focus();
-                // });
+	<head>
+		<title>Chat - Sally Weather Bot</title>
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, minimal-ui" /> -->
+		<meta name="theme-color" content="#faf3dd">
+		<meta name="twitter:title" content="Sally Weather Bot">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="og:image" content="/static/img/sally_v1_Asset 1.png">
+		<meta property="og:type" content="website">
+		<meta name="twitter:image" content="/static/img/sally_v1_Asset 1.png">
+		<link rel="icon" type="image/png" sizes="48x56" href="/static/img/sally_v1_Asset 1@0.5x.png">
+		<link rel="icon" type="image/png" sizes="48x56" href="/static/img/sally_v1_Asset 1@0.5x.png">
+		<link rel="icon" type="image/png" sizes="96x113" href="/static/img/sally_v1_Asset 1-1.png">
+		<link rel="icon" type="image/png" sizes="192x225" href="/static/img/sally_v1_Asset 1@2x.png">
+		<link rel="icon" type="image/png" sizes="382x448" href="/static/img/sally_v1_Asset 1@4x.png">
+		<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+		<link rel="manifest" href="/static/manifest.json">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic&amp;display=swap">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+		<link rel="stylesheet" href="/static/css/Navbar-Centered-Links-icons.css">
+		<link rel="stylesheet" type="text/css" href="/static/assets/index.css" />
+	</head>
+	<body>
+		<header>
+			<!-- Start: Navbar Right Links (Dark) -->
+			<nav class="navbar navbar-dark navbar-expand-md py-3" style="background: #faf3dd;">
+				<div class="container">
+					<a class="navbar-brand d-flex align-items-center" href="#">
+						<span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: #8d6346;padding: 4px;">
+							<img class="img-fluid" src="{{ url_for('static', filename='/img/sally_v1_Asset 1.png') }}" width="90%" loading="eager">
+						</span>
+						<span style="color: #feb548;">Sally: The Weather Bot</span>
+					</a>
+					<button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5">
+						<span class="visually-hidden">Toggle navigation</span>
+						<span class="navbar-toggler-icon" style="color: #8d6346;--bs-primary: #FAF3DD;--bs-primary-rgb: 250,243,221;--bs-secondary: #364652;--bs-body-bg: #FAF3DD;--bs-success: #6BA06A;--bs-success-rgb: 107,160,106;--bs-secondary-rgb: 54,70,82;"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navcol-5">
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}" style="color: #364652;"><strong>Home</strong></a></li>
+							<li class="nav-item" style="color: #364652;"><a class="nav-link" href="{{ url_for('about') }}" style="color: #364652;">About</a></li>
+							<li class="nav-item" style="color: #364652;"><a class="nav-link" href="{{ url_for('credits') }}" style="color: #364652;">Credits</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<main class="container" style="height: calc(100% - 115px); padding: 20px 10px;max-height:calc(100vh - 115px)">
+			<div class="row g-0" style="height: 100%;">
+				<div class="col-md-5 col-lg-4 col-xl-4 col-xxl-4 d-none d-sm-none d-md-inline-flex"></div>
+				<div class="col-12 col-md-7 col-lg-8 col-xl-8 col-xxl-8" style="height:inherit">
+					<div id="chatbox" style="height: calc(100% - 50px);background: #364652;border-radius: 8px;padding: 8px; overflow-y: scroll">
+						<!-- <section style="border-style: none;padding: 4px;">
+							<p class="float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.<br /></p>
+						</section>
+						<section style="border-style: none;padding: 4px;">
+							<p class="float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.<br /></p>
+						</section> -->
+					</div>
+					<!-- <form style="height: 50px;width: 100%;position: relative;display: inline-block;" methods="POST" action="/chat">
+						<div class="input-group" style="height: 100%;padding: 4px;">
+							<input class="form-control" type="text" name="userInput" placeholder="Hey Sally..." autofocus autocomplete="off" style="background: #364652;color: #feb548;display: inline-block;max-width: calc(100% - 50px);border-radius: 20px;border-style: none;box-shadow: 0px 0px 6px;" />
+							<button class="btn btn-primary d-inline-flex justify-content-center align-items-center align-content-center" type="submit" style="border-radius: 100%;background: #364652;position: relative;max-width: 50px;padding: 8px;margin-left: 4px;box-shadow: 0px 0px 6px #feb546;border-style: none;width: 42px;">
+								<i class="material-icons" style="color: #feb548;text-align: center;position: relative;display: block;margin: auto;">send</i>
+							</button>
+						</div>
+					</form> -->
+					<form style="height: 50px;width: 100%;position: relative;display: inline-block;" method="POST" action="">
+						<div class="input-group align-items-center" style="height: 100%;"><select class="form-select form-select-lg" name="mode" value="Select an option" style="border-style: none;box-shadow: 0px 0px 3px;background: #364652;color: #feb548;border-top-left-radius: 16px;border-bottom-left-radius: 16px;height: 48px;">
+								<option value="chat" selected>Chat</option>
+								<option value="cmd">Cmd</option>
+							</select>
+							<input class="form-control form-control-lg d-inline-flex" type="text" name="message" placeholder="Hey Sally..." autofocus autocomplete="off" style="background: #364652;color: #feb548;border-style: none;box-shadow: 0px 0px 3px;width: calc(100% - 200px);" />
+							<button class="btn btn-primary btn-lg d-inline-flex justify-content-center align-items-center" type="submit" style="background: #364652;position: relative;box-shadow: 0px 0px 3px #feb546;border-style: none;border-bottom-right-radius: 16px;border-top-right-radius: 16px;">
+								<i class="material-icons fs-2" style="color: #feb548;text-align: center;position: relative;display: block;margin: auto;">send</i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</main>
+		<footer class="footer text-center" style="padding: 10px;height: auto;">
+			<div class="container-fluid">
+				<p class="text-muted mb-0 small">Copyright &nbsp;© Sally Weather Bot 2022</p>
+			</div><a class="js-scroll-trigger scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>
+		</footer>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg" defer ></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/static/js/stylish-portfolio.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.min.js" integrity="sha512-GtM/5c/Ie0lStj6QwEG0HkpMQuGr9vrOAgFD4nNmImviyZvsJxN7TYU7b+R7Kthob0zFBUpuxfl3R3Mn1qekTw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+		<script>
+			$(document).ready(function() {
+				// var socket = io.connect('http://' + document.domain + ':' + location.port);
+				// socket.on('connect', () => {
+				//     socket.emit('chatMsg', {
+				//         data: 'User Connected'
+				//     });
+				//     socket.on('my response', (msg) => {
+				//         // console.log(msg);
+				//         var text = msg.message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+				//         var section = $("<section class='d-flex' style='border-style: none;padding: 4px;'></section>");
+				//         var p = $("<p class='float-end msg-right' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
+				//         p.append(text);
+				//         section.append(p);
+				//         $("#chatbox").append(section);
+				//     });
+				// });
+				
+				// $("form").on("submit", function(e) {
+				//     e.preventDefault();
+				//     var rawText = $("input[name=userInput]").val();
+				//     var text = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+				//     $("input[name=userInput]").val('').focus();
+				// });
 
-                // on userInput sent, append to chatbox and scroll to bottom of chatbox
-                // send message to server to be processed and send response back to client
-                // append response to chatbox and scroll to bottom of chatbox
-                $('form').on("submit", (e) => {
-                    e.preventDefault();
-                    var rawText = $("input[name=userInput]").val();
-                    var text = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    var section = $('<section class="justify-content-end " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>');
-                    var p = $('<p class="d-flex float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>');
-                    var span = $('<span class="d-flex float-end justify-content-end align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: left;height: auto;padding-right: 8px; padding-bottom: 8px">You</span>')
-                    p.append(text);
-                    section.append(p);
-                    section.append(span);
-                    $("#chatbox").append(section);
-                    $("input[name=userInput]").val('').focus();
-                    $("#chatbox").animate({ scrollTop: $("#chatbox").prop("scrollHeight") }, 500);
-                    // use flask to send message to server and get response
-                    $.ajax({
-                        url: "/chat",
-                        type: "POST",
-                        data: {
-                            message: rawText
-                        },
-                        success: (response) => {
-                            console.log(response);
-                            // var section = $("<section class='d-flex justify-content-start align-items-center' style='border-style: none;padding: 4px;'></section>");
-                            // var p = $("<p class='float-start msg-left' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
-                            var section = $('<section class="justify-content-start " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>')
-                            var p = $('<p class="d-flex float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>')
-                            // var span = $('<span class="d-flex justify-content-end" style="position: absolute;bottom: 0;right: 0;font-size: 12px;color: #ffffff;">Sally</span>')
-                            var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px; padding-bottom:8px">Sally - '+response.context[0]+'</span>')
-                            if (response.response) {
-                                // p.append(response.context[0] + ": " + response.response);
-                                p.append(`${response.response}`)
-                            }
-                            section.append(p);
-                            section.append(span);
-                            $("#chatbox").append(section);
-                            $("#chatbox").animate({ scrollTop: $("#chatbox").prop("scrollHeight") }, 500);
-                        }
-                    });
-                });
-            });
-        </script>
-    </body>
+				// on userInput sent, append to chatbox and scroll to bottom of chatbox
+				// send message to server to be processed and send response back to client
+				// append response to chatbox and scroll to bottom of chatbox
+				$('form').on("submit", (e) => {
+					e.preventDefault();
+					var rawText = $("input[name=message]").val();
+					var text = rawText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					var section = $('<section class="justify-content-end " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>');
+					var p = $('<p class="d-flex float-end msg-right" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>');
+					var span = $('<span class="d-flex float-end justify-content-end align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: left;height: auto;padding-right: 8px; padding-bottom: 8px">You</span>')
+					p.append(text);
+					section.append(p);
+					section.append(span);
+					$("#chatbox").append(section);
+					$("input[name=message]").val('').focus();
+					$("#chatbox").animate({ scrollTop: $("#chatbox").prop("scrollHeight") }, 500);
+					// use flask to send message to server and get response
+					$.ajax({
+						url: "/chat",
+						type: "POST",
+						data: {
+							message: rawText
+						},
+						success: (response) => {
+							console.log(response);
+							// var section = $("<section class='d-flex justify-content-start align-items-center' style='border-style: none;padding: 4px;'></section>");
+							// var p = $("<p class='float-start msg-left' style='padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;'></p>");
+							var section = $('<section class="justify-content-start " style="border-style: none;padding: 4px;width: 100%;position: relative;"></section>')
+							var p = $('<p class="d-flex float-start msg-left" style="padding: 8px;background: #1cc4ab;display: inline-flex;box-shadow: 0px 0px 6px #169884;width: auto;"></p>')
+							// var span = $('<span class="d-flex justify-content-end" style="position: absolute;bottom: 0;right: 0;font-size: 12px;color: #ffffff;">Sally</span>')
+							var span = $('<span class="d-flex float-start justify-content-start align-items-center text-muted" style="/*padding: 8px;*//*background: #1cc4ab;*/display: inline-flex;/*box-shadow: 0px 0px 6px #169884;*/width: 100%;float: right;height: auto;padding-left: 8px; padding-bottom:8px"></span>')
+							if (response.context) {
+								// Sally - '+((response.context) ? response.context : "Could not get context")+'
+								// if response.context is an array has more than 1 items, join by comma, else just use response.context
+								let ctxt = (Array.isArray(response.context) && response.context.length > 1) ? response.context.join(", ") : response.context;
+								span.append('Sally - ' + ctxt);
+							} else {
+								span.append("Sally");
+							}
+							if (response.response) {
+								// p.append(response.context[0] + ": " + response.response);
+								p.append(`${response.response}`)
+								if (response.data) {
+									if (response.data.type == 'mapLocation') {
+										// map data is returned, looks like this
+										// let data = {
+										// 	'type': "mapLocation",
+										// 	"items": {lat, lng}
+										// }
+										// The location of Uluru
+										const uluru = { lat: response.data.items.lat, lng: response.data.items.lng };
+										// The map, centered at Uluru
+										let newMapDiv = $('<div class="mapResponse"></div>');
+										const map = new google.maps.Map(newMapDiv, {
+											zoom: 4,
+											center: uluru,
+										});
+										// The marker, positioned at Uluru
+										const marker = new google.maps.Marker({
+											position: uluru,
+											map: map,
+										});
+										section.append(newMapDiv);
+									}
+								}
+							}
+							section.append(p);
+							section.append(span);
+							$("#chatbox").append(section);
+							$("#chatbox").animate({ scrollTop: $("#chatbox").prop("scrollHeight") }, 500);
+						}
+					});
+				});
+			});
+		</script>
+	</body>
 </html>

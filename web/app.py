@@ -11,6 +11,8 @@ import requests
 import json
 import os
 import urllib.request as req
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from geotext import GeoText
 
 # cb = cleverbot.Cleverbot('CCC1afw_sCnym21L6wpLuWBLDbA')
@@ -30,7 +32,12 @@ with (open("./config.json")) as jsonFile:
 openWeatherMapApiKey = config['API_KEY']
 openWeatherMapEndPoint = config['OpenWeatherMapEndpoint']
 cbsession = ""
+# Define the words related to time
+timeWords = ["month", "months", "year", "years", "week", "weeks", "day", "days",
+             "hour", "hours", "minute", "minutes", "second", "seconds", "ago", "now", "today", "tomorrow", "yesterday", "past", "future", "present"]
 
+numbersWords = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+                "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 app = Flask(__name__)
 app.config.from_object('config')
 
@@ -47,11 +54,18 @@ def chat():
 # receive and send responses to the chat
 @app.route('/chat', methods=['GET','POST'])
 def chat_post():
+    print(request)
+    print(request.form)
+    # print(request.form['userInput'])
     if request.method == 'POST':
         message = request.form['message']
         ip = socket.gethostbyname(socket.gethostname())
+        print(ip)
         response = process_response(request)
+        print(response)
         return response
+    # else :
+    #     return render_template('chat.html')
 
 def process_response(text):
     print("Processing response")
@@ -67,43 +81,40 @@ def process_response(text):
     # sbot = bot.main(text.form['message'], socket.gethostbyname(socket.gethostname()))
     # bot = bot2.main(text.form['message'])
     result = ""
-    current_context = get_context(text.form['message'])[0]
+    msg = text.form['message']
+    current_context = get_context(msg)
     cbsession = "Sally_"+find_location_by_ip()["location"]
+    print(cbsession)
     print(get_context)
     print(getSentenceTense)
-    if current_context == "" or current_context is None:
-        # result = cb.say(text)
-        msgHistory.append(text.form['message'])
-        result = cb.cleverbot(text.form['message'], msgHistory, cbsession)
-        result = {'response': result, 'context': current_context}
-    else:
-        contexts = get_context(text.form["message"])
-        print(contexts)
-        # location = findhas_country(text.form["message"])
-        location = find_location_by_ip()
-        # print(location)
-        if len(contexts) > 0:
-            for context in contexts:
-                if context == "dressSense":
-                    weatherData = getWeather()
-                    descs = weatherData["weather"][0]["main"]
-                    rec = dressSense()
-                    return {"response": rec, "context": context, "data": weatherData}
-                elif context == "weather":
-                    # result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
-                    result = {'response': weather.get_weather(), "context": context}
-                elif context == "stormwatch":
-                    result = {"response": "UNable to load stormwatch data", "context": context}
-                elif context == "location":
-                    result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
-                elif context == "future":
-                    result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
-                elif context == "history":
-                    result = history.History(text = text.form['message'], tense=getSentenceTense(text.form['message']), location=location).reply()
-                elif context == "conversation":
-                    msgHistory.append(text)
-                    result = cb.cleverbot(text.form['message'], msgHistory, cbsession)
-                    result = {'response': result, 'context': current_context}
+    contexts = get_context(text.form["message"])
+    print(contexts)
+    # location = findhas_country(text.form["message"])
+    location = find_location_by_ip()
+    # print(location)
+    if len(contexts) > 0:
+        for context in contexts:
+            if context == "dressSense":
+                weatherData = weather.get_weather(location['lat'], location['lng'])
+                # descs = weatherData["weather"][0]["main"]
+                rec = dressSense.getDressSense()
+                result = {"response": rec, "context": context, "data": weatherData}
+            elif context == "history":
+                result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
+            elif context == "weather":
+                # result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
+                result = {'response': weather.get_weather(location['lat'], location['lng']), "context": context}
+            elif context == "stormwatch":
+                # result = {"response": "UNable to load stormwatch data", "context": context}
+                result = {'response': get_stormwatch(location['latitude'], location['longitude']), "context": context}
+            elif context == "location":
+                result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
+            elif context == "future":
+                result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
+            else:
+                msgHistory.append(text)
+                result = cb.cleverbot(msg, session=cbsession)
+                result = {'response': result, 'context': current_context}
     print(result)
     return jsonify(result)
 
@@ -137,16 +148,15 @@ def get_context(text):
     rcontext = []
     if getSentenceTense(text) == "past":
         rcontext.append("history")
-    elif getSentenceTense(text) == "future":
+    if getSentenceTense(text) == "future":
         rcontext.append("future")
-    else:
-        for token in tokens:
-            for context in valid_contexts:
-                if token.tag_ in valid_contexts[context]:
-                    rcontext.append(context)
-                    break
-                else:
-                    rcontext.append("conversation")
+    for token in tokens:
+        for context in valid_contexts:
+            if token.text in valid_contexts[context]:
+                rcontext.append(context)
+                break
+            else:
+                rcontext.append("conversation")
     rcontext = list(dict.fromkeys(rcontext))
     return rcontext
 
@@ -157,8 +167,8 @@ def getSentenceTense(sentence):
         if token.tag_ == "VBD" or token.tag_ == "VBN" or token.tag_ == "VBP":
             sentenceTense = "past"
             print(token.text)
-        # if token.tag_ == "VBG" or token.tag_ == "VBZ":
-        if token.tag_ == "VBZ":
+        if token.tag_ == "VBG" or token.tag_ == "VBZ":
+        # if token.tag_ == "VBZ":
             sentenceTense = "future"
             print(token.text)
     return sentenceTense
@@ -198,15 +208,40 @@ def new_location():
         return newLoc
 
 def find_location_by_ip():
-    with req.urlopen("https://geolocation-db.com/json/"+ip) as locdata:
+    with req.urlopen("https://geolocation-db.com/json/&ip="+ip) as locdata:
+        print(locdata)
         data = json.loads(locdata.read().decode())
+        print(data)
         # print(data)
         lat = data["latitude"]
         long = data["longitude"]
-        location = data["city"] + ", " + data["state"] + ", " + data["country_name"]
+        # check if city state and country_name are not None
+        location = ""
+        if data["city"] is not None and data["state"] is not None and data["country_name"] is not None:
+            location = data["city"] + ", " + data["state"] + ", " + data["country_name"]
+        elif data["city"] is not None and data["country_name"] is not None:
+            location = data["city"] + ", " + data["country_name"]
+        elif data["state"] is not None and data["country_name"] is not None:
+            location = data["state"] + ", " + data["country_name"]
+        elif data["country_name"] is not None:
+            location = data["country_name"]
+        else:
+            location = "Earth"
         res = {"ip": ip, "lat": lat, "lng": long, "location": location}
         # print(res)
         return res
+
+def get_dates(message):
+    dates = []
+    entities = []
+    for token in appnlp(message):
+        if token.ent_type_ != "":
+            entities.append(token.text)
+
+    for i in entities:
+        if i.lower() in timeWords:
+            dates.append(i)
+    return dates
 
 def getWeather():
     userIp = ip
@@ -220,6 +255,68 @@ def getWeather():
     response = requests.get(openWeatherMapEndPoint, params=openWeatherMapParams)
     print(response.json())
     return response.json()
+
+def get_time(message, context):
+    # Get the current date
+    current_date = datetime.now()
+    entities = []
+    numbers = []
+    for token in appnlp(message):
+        if token.ent_type_ != "":
+            entities.append(token.text)
+
+    for i in entities:
+        if i.lower() in numbersWords:
+            numbers.append(i)
+
+    # If the user wants to know the weather in the past
+    if "past" in context:
+        if "month" in entities:
+            current_date = current_date - relativedelta(months=int(numbers[0]))
+        elif "year" in entities:
+            current_date = current_date - relativedelta(years=int(numbers[0]))
+        elif "week" in entities:
+            current_date = current_date - relativedelta(weeks=int(numbers[0]))
+        elif "day" in entities:
+            current_date = current_date - relativedelta(days=int(numbers[0]))
+        else:
+            current_date = current_date - relativedelta(days=int(numbers[0]))
+    # If the user wants to know the weather in the future
+    elif "future" in context:
+        if "month" in entities:
+            current_date = current_date + relativedelta(months=int(numbers[0]))
+        elif "year" in entities:
+            current_date = current_date + relativedelta(years=int(numbers[0]))
+        elif "week" in entities:
+            current_date = current_date + relativedelta(weeks=int(numbers[0]))
+        elif "day" in entities:
+            current_date = current_date + relativedelta(days=int(numbers[0]))
+        else:
+            current_date = current_date + relativedelta(days=int(numbers[0]))
+    # If the user wants to know the weather in the past
+    elif "present" in context:
+        current_date = current_date
+    else:
+        current_date = current_date
+
+    # Get the date
+    date = {"year": current_date.year, "month": current_date.month,
+            "day": current_date.day, "hour": current_date.hour,
+            "minute": current_date.minute, "second": current_date.second}
+    print(date)
+    return date
+
+def get_stormwatch(lat, lng):
+    # Get the stormwatch information
+    weather_data = {}
+    stormwatch_url = "https://api.stormglass.io/v2/weather/point?"
+    stormwatch_url += "lat=" + str(lat) + "&lng=" + str(lng) + "&params=waveDirection"
+    stormwatch_data = requests.get(stormwatch_url, headers={"Authorization": config["stormwatch"]})
+
+    # Get the data
+    weather_data["wave_direction"] = stormwatch_data.json()["hours"][0]["waveDirection"]["noWaveDirection"]["value"]
+
+    return weather_data
 
 @app.route('/about')
 def about():

@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, url_for, jsonify
+import googlemaps
 import spacy
 # from ../SallyPython import location
 from scripts import history, dressSense, weather
@@ -14,6 +15,15 @@ import urllib.request as req
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from geotext import GeoText
+import requests
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import nltk
+
+nltk.download("punkt")
+nltk.download("averaged_perceptron_tagger")
+nltk.download("maxent_ne_chunker")
+nltk.download("words")
 
 # cb = cleverbot.Cleverbot('CCC1afw_sCnym21L6wpLuWBLDbA')
 msgHistory = []
@@ -89,6 +99,7 @@ def process_response(text):
     print(getSentenceTense)
     contexts = get_context(text.form["message"])
     print(contexts)
+    mode = getmode(text.form["message"])
     # location = findhas_country(text.form["message"])
     location = find_location_by_ip()
     # print(location)
@@ -108,7 +119,9 @@ def process_response(text):
                 # result = {"response": "UNable to load stormwatch data", "context": context}
                 result = {'response': get_stormwatch(location['latitude'], location['longitude']), "context": context}
             elif context == "location":
-                result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
+                # result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
+                result = locationResponse(msg)
+                result = {'response': result[0], "context": context, "data": {"link": result[1]}}
             elif context == "future":
                 result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
             else:
@@ -208,7 +221,7 @@ def new_location():
         return newLoc
 
 def find_location_by_ip():
-    with req.urlopen("https://geolocation-db.com/json/&ip="+ip) as locdata:
+    with req.urlopen("https://geolocation-db.com/json/?ip="+ip) as locdata:
         print(locdata)
         data = json.loads(locdata.read().decode())
         print(data)
@@ -317,6 +330,100 @@ def get_stormwatch(lat, lng):
     weather_data["wave_direction"] = stormwatch_data.json()["hours"][0]["waveDirection"]["noWaveDirection"]["value"]
 
     return weather_data
+
+def getmode(sentence):
+    mode = 'default'
+    tokens = appnlp(sentence.lower())
+    for token in tokens:
+        if token.text == 'street':
+            mode = 'streetview'
+        elif token.text == 'map' or token.text == 'images':
+            mode = 'mapimage'
+    return mode
+
+def extract_entity_names(t):
+    entity_names = []
+    if hasattr(t, "label") and t.label:
+        if t.label() == "NE":
+            entity_names.append(" ".join([child[0] for child in t]))
+        else:
+            for child in t:
+                entity_names.extend(extract_entity_names(child))
+
+    return entity_names
+
+def get_entities(line):
+    sentences = nltk.sent_tokenize(line)
+    tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+    tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+    chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
+
+    entities = []
+    for tree in chunked_sentences:
+        entities.extend(extract_entity_names(tree))
+
+    print(entities)
+    return entities
+
+def locationResponse(sentence):
+    # Location stuff
+    # data = [lat, lng]
+    # result being the string response, what the bot says to the user
+    data = ""
+    loc = find_location_by_ip()["location"];
+    if(loc[0]!=None):
+        if(getmode(sentence) == 'streetview'):
+            result = "Here's a street view of " + loc[0] + ". "
+            data = streetview(loc[0])
+        elif(getmode(sentence) == 'mapimage'):
+            result = "Here's a map of " + loc[0]+ ". "
+            data = mapimg(loc[0])
+    else:
+        result = "Here's a street view of Kelowna. "
+        data = streetview("Kelowna")
+    return [result, data]
+
+def streetview(location):
+    meta_base = 'https://maps.googleapis.com/maps/api/streetview/metadata?'
+    pic_base = 'https://maps.googleapis.com/maps/api/streetview?'
+    api_key = 'AIzaSyAmxhIlDVfiAyXGUCEplWBixuU1ULJOuHQ'
+    meta_params = {'key': api_key,
+                'location': location}
+    pic_params = {'key': api_key,
+                'location': location,
+                'size': "600x600"}
+    meta_response = requests.get(meta_base, params=meta_params)
+    meta_response.json()
+    pic_response = requests.get(pic_base, params=pic_params)
+    for key, value in pic_response.headers.items():
+        print(f"{key}: {value}")
+    with open('./static/img/street.jpg', 'wb') as file:
+        file.write(pic_response.content)
+    pic_response.close()
+    # plt.figure(figsize=(10, 10))
+    # img=mpimg.imread('street.jpg')
+    # imgplot = plt.imshow(img)
+    # plt.show()
+    return url_for("static", filename="/img/street.jpg")
+
+def mapimg(location):
+    api_key = "AIzaSyAmxhIlDVfiAyXGUCEplWBixuU1ULJOuHQ"
+    url = "https://maps.googleapis.com/maps/api/staticmap?"
+    center = location
+    zoom = 15
+    r = requests.get(url + "center=" + center + "&zoom=" + str(zoom) + "&size=640x640&key=" + api_key + "&sensor=false")
+    f = open('address of the file location', 'wb')
+    f.write(r.content)
+    f.close()
+    with open('./static/img/img.jpg', 'wb') as file:
+        file.write(r.content)
+    r.close()
+    # plt.figure(figsize=(10, 10))
+    # img=mpimg.imread('img.jpg')
+    # imgplot = plt.imshow(img)
+    # plt.show()
+    return url_for("static", filename="/img/img.jpg")
+
 
 @app.route('/about')
 def about():

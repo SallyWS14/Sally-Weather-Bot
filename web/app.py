@@ -158,6 +158,7 @@ def get_context(text):
         "stormwatch" : ["stormwatch", "storm", "thunder", "snowfall", "snow", "typhoon", "alerts"],
         "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"]
     }
+    # , "streetview", "street view", "street-view", "street view", "street", "road", "map", "map image", "map-image", "map-image"
     rcontext = []
     if getSentenceTense(text) == "past":
         rcontext.append("history")
@@ -371,6 +372,8 @@ def locationResponse(sentence):
     # result being the string response, what the bot says to the user
     data = ""
     loc = find_location_by_ip()["location"];
+    result = "Here's a street view of Kelowna. "
+    data = streetview("Kelowna")
     if(loc[0]!=None):
         if(getmode(sentence) == 'streetview'):
             result = "Here's a street view of " + loc[0] + ". "
@@ -378,9 +381,6 @@ def locationResponse(sentence):
         elif(getmode(sentence) == 'mapimage'):
             result = "Here's a map of " + loc[0]+ ". "
             data = mapimg(loc[0])
-    else:
-        result = "Here's a street view of Kelowna. "
-        data = streetview("Kelowna")
     return [result, data]
 
 def streetview(location):
@@ -404,7 +404,7 @@ def streetview(location):
     # img=mpimg.imread('street.jpg')
     # imgplot = plt.imshow(img)
     # plt.show()
-    return url_for("static", filename="/img/street.jpg")
+    return url_for("static", filename="img/street.jpg")
 
 def mapimg(location):
     api_key = "AIzaSyAmxhIlDVfiAyXGUCEplWBixuU1ULJOuHQ"
@@ -422,7 +422,7 @@ def mapimg(location):
     # img=mpimg.imread('img.jpg')
     # imgplot = plt.imshow(img)
     # plt.show()
-    return url_for("static", filename="/img/img.jpg")
+    return url_for("static", filename="img/img.jpg")
 
 
 @app.route('/about')

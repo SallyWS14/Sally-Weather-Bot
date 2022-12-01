@@ -156,7 +156,7 @@ def get_context(text):
         "dressSense" : ["recommend", "dress", "clothes", "wear", "put on"],
         "weather" : ["weather", "cold", "chill", "warm", "cool", "temperature", "humidity", "breeze", "wind"],
         "stormwatch" : ["stormwatch", "storm", "thunder", "snowfall", "snow", "typhoon", "alerts"],
-        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"]
+        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved", "street", "streetview", "street view", "street-view", "street view", "street", "road", "map", "map image", "map-image", "map-image"]
     }
     # , "streetview", "street view", "street-view", "street view", "street", "road", "map", "map image", "map-image", "map-image"
     rcontext = []
@@ -222,7 +222,7 @@ def new_location():
         return newLoc
 
 def find_location_by_ip():
-    with req.urlopen("https://geolocation-db.com/json/?ip="+ip) as locdata:
+    with req.urlopen("https://geolocation-db.com/json/?ip="+ip+"&position=true") as locdata:
         print(locdata)
         data = json.loads(locdata.read().decode())
         print(data)
@@ -342,51 +342,54 @@ def getmode(sentence):
             mode = 'mapimage'
     return mode
 
-def extract_entity_names(t):
-    entity_names = []
-    if hasattr(t, "label") and t.label:
-        if t.label() == "NE":
-            entity_names.append(" ".join([child[0] for child in t]))
-        else:
-            for child in t:
-                entity_names.extend(extract_entity_names(child))
+def ipInfo(addr=''):
+    from urllib.request import urlopen
+    from json import load
+    if addr == '':
+        url = 'https://ipinfo.io/json'
+    else:
+        url = 'https://ipinfo.io/' + addr + '/json'
+    res = urlopen(url)
+    #response from url(if res==None then check connection)
+    data = load(res)
+    #will load the json response into data
+    for attr in data.keys():
+        #will print the data line by line
+        print(attr,' '*13+'\t->\t',data[attr])
+    return data["loc"]
 
-    return entity_names
-
-def get_entities(line):
-    sentences = nltk.sent_tokenize(line)
-    tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-    tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-    chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-
-    entities = []
-    for tree in chunked_sentences:
-        entities.extend(extract_entity_names(tree))
-
-    print(entities)
-    return entities
+def reverseGeocode(latlng):
+    result = {}
+    apikey = 'AIzaSyC6hJ8U_clMgEkSdsktg1M8m5L0T-xeEBw'
+    url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latlng}&key={apikey}'
+    r = requests.get(url)
+    r.raise_for_status()
+    data = r.json()
+    if data['results']:
+        result = data['results'][0]['formatted_address']
+    return result
 
 def locationResponse(sentence):
     # Location stuff
     # data = [lat, lng]
     # result being the string response, what the bot says to the user
     data = ""
-    loc = find_location_by_ip()["location"];
+    loc = ipInfo();
     result = "Here's a street view of Kelowna. "
     data = streetview("Kelowna")
-    if(loc[0]!=None):
+    if(loc!=None):
         if(getmode(sentence) == 'streetview'):
-            result = "Here's a street view of " + loc[0] + ". "
-            data = streetview(loc[0])
+            result = "Here's a street view of " + reverseGeocode(loc) + ". "
+            data = streetview(loc)
         elif(getmode(sentence) == 'mapimage'):
-            result = "Here's a map of " + loc[0]+ ". "
-            data = mapimg(loc[0])
+            result = "Here's a map of " + reverseGeocode(loc)+ ". "
+            data = mapimg(loc)
     return [result, data]
 
 def streetview(location):
     meta_base = 'https://maps.googleapis.com/maps/api/streetview/metadata?'
     pic_base = 'https://maps.googleapis.com/maps/api/streetview?'
-    api_key = 'AIzaSyAmxhIlDVfiAyXGUCEplWBixuU1ULJOuHQ'
+    api_key = 'AIzaSyC6hJ8U_clMgEkSdsktg1M8m5L0T-xeEBw'
     meta_params = {'key': api_key,
                 'location': location}
     pic_params = {'key': api_key,
@@ -407,11 +410,11 @@ def streetview(location):
     return url_for("static", filename="img/street.jpg")
 
 def mapimg(location):
-    api_key = "AIzaSyAmxhIlDVfiAyXGUCEplWBixuU1ULJOuHQ"
+    api_key = "AIzaSyC6hJ8U_clMgEkSdsktg1M8m5L0T-xeEBw"
     url = "https://maps.googleapis.com/maps/api/staticmap?"
     center = location
     zoom = 15
-    r = requests.get(url + "center=" + center + "&zoom=" + str(zoom) + "&size=640x640&key=" + api_key + "&sensor=false")
+    r = requests.get(url + "center=" + center + "&zoom=" + str(zoom) + "&size=600x600&key=" + api_key)
     f = open('address of the file location', 'wb')
     f.write(r.content)
     f.close()

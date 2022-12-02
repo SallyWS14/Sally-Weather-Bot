@@ -2,11 +2,39 @@ import requests
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+def ipInfo(addr=''):
+    from urllib.request import urlopen
+    from json import load
+    if addr == '':
+        url = 'https://ipinfo.io/json'
+    else:
+        url = 'https://ipinfo.io/' + addr + '/json'
+    res = urlopen(url)
+    #response from url(if res==None then check connection)
+    data = load(res)
+    #will load the json response into data
+    for attr in data.keys():
+        #will print the data line by line
+        print(attr,' '*13+'\t->\t',data[attr])
+    return data["loc"]
+
+def reverseGeocode(latlng):
+    result = {}
+    apikey = 'AIzaSyC6hJ8U_clMgEkSdsktg1M8m5L0T-xeEBw'
+    url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latlng}&key={apikey}'
+    r = requests.get(url)
+    r.raise_for_status()
+    data = r.json()
+    if data['results']:
+        result = data['results'][0]['formatted_address']
+    return result
+
 meta_base = 'https://maps.googleapis.com/maps/api/streetview/metadata?'
 pic_base = 'https://maps.googleapis.com/maps/api/streetview?'
-api_key = 'AIzaSyAmxhIlDVfiAyXGUCEplWBixuU1ULJOuHQ'
+api_key = 'AIzaSyC6hJ8U_clMgEkSdsktg1M8m5L0T-xeEBw'
 # using my graduate school almar mater, GWU, as an example
-location = "kelowna";
+print(reverseGeocode(ipInfo()))
+location = "Fuxing South rd, Taipei, Taiwan";
 # define the params for the metadata reques
 meta_params = {'key': api_key,
                'location': location}

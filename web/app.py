@@ -110,6 +110,9 @@ def process_response(text):
                 # descs = weatherData["weather"][0]["main"]
                 rec = dressSense.getDressSense()
                 result = {"response": rec, "context": context, "data": weatherData}
+            elif context == "streetView" or context == "mapimg":
+                result = locationResponse(msg)
+                result = {'response': result[0], "context": context, "data": {"link": result[1]}}
             elif context == "history":
                 result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
             elif context == "weather":
@@ -156,7 +159,9 @@ def get_context(text):
         "dressSense" : ["recommend", "dress", "clothes", "wear", "put on"],
         "weather" : ["weather", "cold", "chill", "warm", "cool", "temperature", "humidity", "breeze", "wind"],
         "stormwatch" : ["stormwatch", "storm", "thunder", "snowfall", "snow", "typhoon", "alerts"],
-        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved", "street", "streetview", "street view", "street-view", "street view", "street", "road", "map", "map image", "map-image", "map-image"]
+        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"],
+        "streetView": ["streetview", "street view", "street-view", "street view", "street", "road"],
+        "mapimg": ["map", "map image", "map-image", "map-image"]
     }
     # , "streetview", "street view", "street-view", "street view", "street", "road", "map", "map image", "map-image", "map-image"
     rcontext = []
@@ -222,7 +227,7 @@ def new_location():
         return newLoc
 
 def find_location_by_ip():
-    with req.urlopen("https://geolocation-db.com/json/?ip="+ip+"&position=true") as locdata:
+    with req.urlopen("https://geolocation-db.com/json/187c4d90-701f-11ed-8f13-95359090f479/") as locdata:
         print(locdata)
         data = json.loads(locdata.read().decode())
         print(data)
@@ -397,7 +402,7 @@ def streetview(location):
                 'size': "600x600"}
     meta_response = requests.get(meta_base, params=meta_params)
     meta_response.json()
-    pic_response = requests.get(pic_base, params=pic_params)
+    pic_response = requests.get(pic_base+"center=" + location + "&zoom=14&size=600x600&key=" + api_key)
     for key, value in pic_response.headers.items():
         print(f"{key}: {value}")
     with open('./static/img/street.jpg', 'wb') as file:
@@ -415,9 +420,6 @@ def mapimg(location):
     center = location
     zoom = 15
     r = requests.get(url + "center=" + center + "&zoom=" + str(zoom) + "&size=600x600&key=" + api_key)
-    f = open('address of the file location', 'wb')
-    f.write(r.content)
-    f.close()
     with open('./static/img/img.jpg', 'wb') as file:
         file.write(r.content)
     r.close()

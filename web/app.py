@@ -122,9 +122,9 @@ def process_response(text):
                 # result = {"response": "UNable to load stormwatch data", "context": context}
                 result = {'response': get_stormwatch(location['latitude'], location['longitude']), "context": context}
             elif context == "location":
-                # result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
-                result = locationResponse(msg)
-                result = {'response': result[0], "context": context, "data": {"link": result[1]}}
+                result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
+                # result = locationResponse(msg)
+                # result = {'response': result[0], "context": context, "data": {"link": result[1]}}
             elif context == "future":
                 result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
             else:
@@ -385,7 +385,7 @@ def locationResponse(sentence):
     if(loc!=None):
         if(getmode(sentence) == 'streetview'):
             result = "Here's a street view of " + reverseGeocode(loc) + ". "
-            data = streetview(loc)
+            data = streetview(reverseGeocode(loc))
         elif(getmode(sentence) == 'mapimage'):
             result = "Here's a map of " + reverseGeocode(loc)+ ". "
             data = mapimg(loc)
@@ -402,7 +402,7 @@ def streetview(location):
                 'size': "600x600"}
     meta_response = requests.get(meta_base, params=meta_params)
     meta_response.json()
-    pic_response = requests.get(pic_base+"center=" + location + "&zoom=14&size=600x600&key=" + api_key)
+    pic_response = requests.get(pic_base, params=pic_params)
     for key, value in pic_response.headers.items():
         print(f"{key}: {value}")
     with open('./static/img/street.jpg', 'wb') as file:

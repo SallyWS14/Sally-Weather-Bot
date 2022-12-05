@@ -34,7 +34,7 @@ pic_base = 'https://maps.googleapis.com/maps/api/streetview?'
 api_key = 'AIzaSyC6hJ8U_clMgEkSdsktg1M8m5L0T-xeEBw'
 # using my graduate school almar mater, GWU, as an example
 print(reverseGeocode(ipInfo()))
-location = "Fuxing South rd, Taipei, Taiwan";
+location = reverseGeocode(ipInfo());
 # define the params for the metadata reques
 meta_params = {'key': api_key,
                'location': location}

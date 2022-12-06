@@ -13,11 +13,11 @@ Provides you with accurate weather data on demand.
 
 * **Activate the python environment**
   - `python3 -m venv venv`
-  - `. venv/Scripts/activate`
+  - `. venv/Scripts/activate` or '. venv/bin/activate' for mac users
     **Install requirements**
   - `pip install -r requirements.txt`
-  - pip install wikipedia
-  - pip install googletrans==3.1.0a0
+  - `pip install wikipedia`
+  - `pip install googletrans==3.1.0a0`
     **Start the program**
   - `flask run` **(edited)**
 

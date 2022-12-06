@@ -11,10 +11,10 @@ Provides you with accurate weather data on demand.
 ## More Information
 - [Config File](./README.md)
 
-## IMPROVED FEATURES FOR THE BOT
+## Improvid features for the Bot
 - Our cool bot Sally will detect the language you are using to communicate with the bot, and will translate parts of your sentence to any desirable langugage. Say Spanish. Cool isn't it?
 
 - Google News Feed feature will give users the option to select their choice of country, topic, and language to give certain number of feeds. Sally will first detect the word 'news' in the message user provides, and then display a cool dropdown box which will have few options for the feed.
 
-- API used:
-- GoogleTrans, Gclientnews
+- API used: GoogleTrans, Gclientnews
+- 

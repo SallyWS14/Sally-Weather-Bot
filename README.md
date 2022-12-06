@@ -10,9 +10,9 @@ Provides you with accurate weather data on demand.
 
 ## Newest Features
 - You can use sally to search for words that you don’t know or may want to know more about. Just ask sally, Could you search [insert word here]? And sally will reply with what she can find about the word using the wiki api 
--  You can find related words by asking sally “Could you show me words related to {word}?”
-- You can ask sally to translate sentences. Just ask “could you translate this into [insert language here] ? [insert sentence here]” and sally will return the translated sentence 
-- You can ask sally to detect what language a sentence is in, by just saying “detect? [insert sentence here]” and sally will reply with what language your given sentence is in  
+-  You can find words related to another given word, by asking sally “Could you show me words related to [insert word here]?” sally will use the wiki api to find the the related words
+- You can ask sally to translate sentences. Just ask “could you translate this into [insert language here] ? [insert sentence here]” and sally will return the translated sentence using the google translate api 
+- You can ask sally to detect what language a sentence is in, by just saying “detect? [insert sentence here]” and sally will reply with what language your given sentence is in using the google translate api
 
 
 ## More Information

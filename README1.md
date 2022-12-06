@@ -16,6 +16,8 @@ Provides you with accurate weather data on demand.
   - `. venv/Scripts/activate`
     **Install requirements**
   - `pip install -r requirements.txt`
+  - pip install wikipedia
+  - pip install googletrans==3.1.0a0
     **Start the program**
   - `flask run` **(edited)**
 

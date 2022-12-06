@@ -1,48 +1,26 @@
-# importing requests and json
-from sys import api_version
-import requests, json
-# base URL
-BASE_URL = "https://api.openweathermap.org/data/2.5/weather?"
-# City Name CITY = "Hyderabad"
-api_version key API_KEY = "2de35d4c586e85adf3afcbd482bd52dd"
-# upadting the URL
-URL = BASE_URL + "q=" + CITY + "&appid=" + API_KEY
-# HTTP request
-response = requests.get(URL)
-# checking the status code of the request
-if response.status_code == 200:
-   # getting data in the json format
-   data = response.json()
-   # getting the main dict block
-   main = data['main']
-   # getting temperature
-   temperature = main['temp']
-   # getting the humidity
-   humidity = main['humidity']
-   # getting the pressure
-   pressure = main['pressure']
-   # weather report
-   report = data['weather']
-   print(f"{CITY:-^30}")
-   print(f"Temperature: {temperature}")
-   print(f"Humidity: {humidity}")
-   print(f"Pressure: {pressure}")
-   print(f"Weather Report: {report[0]['description']}")
-else:
-   # showing the error message
-   print("Error in the HTTP request")
-   
-   //synonymn recognition
-   
-   import nltk
+import requests
+import socket
+import json
+# TODO: synonym, spellcheck
 
-print(nltk.__version__)
+api_key = "2de35d4c586e85adf3afcbd482bd52dd"
+# with open('../storage/data_location.json', 'r') as infile:
+#     geo = json.load(infile)
+# for loc in geo:
+#     if(loc['ip'] == socket.gethostbyname(socket.gethostname())):
+#         lat = loc['latitude']
+#         lon = loc['longitude']
+#         break
 
-nltk.download()
-
-sentence = """At eight o'clock on Thursday morning
-    Arthur didn't feel very good."""
-
-tokens = nltk.word_tokenize(sentence)
-
-print(tokens)
+def get_weather(lat, lon):
+    url = "https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}&units=metric".format(lat, lon, api_key)
+    response = requests.get(url)
+    data = json.loads(response.text)
+    print(data)
+    # print(data)
+    # print("Current Weather: ", data['weather'][0]['description'])
+    # print("Maximum Temperature: ", data['main']['temp_min'])
+    # print("Minimum Temperature: ", data['main']['temp_max'])
+    # print("Humidity", data['main']['humidity'])
+    buildStr = f"The current weather is {data['weather'][0]['description']} with a high of {data['main']['temp_max']} and a low of {data['main']['temp_min']}. The humidity is {data['main']['humidity']}"
+    return buildStr

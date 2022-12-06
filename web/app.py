@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, url_for, jsonify
 import spacy
 # from ../SallyPython import location
-from scripts import history, dressSense, weather
+from scripts import history, dressSense, weather, wiki, translate
 import socket
 import re
 from spacy.tokenizer import Tokenizer
@@ -68,7 +68,7 @@ def chat_post():
     #     return render_template('chat.html')
 
 def process_response(text):
-    print("Processing response")
+    print("Processing response - test 2")
     """
     response: "The bot message",
     command: "history",
@@ -91,6 +91,7 @@ def process_response(text):
     print(contexts)
     # location = findhas_country(text.form["message"])
     location = find_location_by_ip()
+    
     # print(location)
     if len(contexts) > 0:
         for context in contexts:
@@ -111,11 +112,25 @@ def process_response(text):
                 result = {"response": "Your location has been changed", "context": context, "data": find_location_by_ip()}
             elif context == "future":
                 result = history.History(text = msg, tense=getSentenceTense(msg), location=location).reply()
+            elif context == "search":
+                response = wiki.wikiResult(msg)
+                result = {"response": response, "context": context}
+            elif context == "related":
+                response = wiki.findRelated(msg)
+                result = {"response": response, "context": context}
+            elif context == "translate":
+                response = translate.translateInput(msg)
+                result = {"response": response, "context": context}
+            elif context == "detect":
+                response = translate.detectLanguage(msg)
+                result = {"response": response, "context": context}
+
             else:
                 msgHistory.append(text)
                 result = cb.cleverbot(msg, session=cbsession)
                 result = {'response': result, 'context': current_context}
     print(result)
+        
     return jsonify(result)
 
 def has_country(text):
@@ -139,11 +154,16 @@ def has_country(text):
 def get_context(text):
     """returns context from text"""
     tokens = appnlp(text)
+    #TODO
     valid_contexts = {
         "dressSense" : ["recommend", "dress", "clothes", "wear", "put on"],
         "weather" : ["weather", "cold", "chill", "warm", "cool", "temperature", "humidity", "breeze", "wind"],
         "stormwatch" : ["stormwatch", "storm", "thunder", "snowfall", "snow", "typhoon", "alerts"],
-        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"]
+        "location" : ["moving", "going to", "living", "live", "flying", "driving", "moved"],
+        "search" : ["search"],
+        "related": ["related"],
+        "translate": ["translate"],
+        "detect": ["detect"]
     }
     rcontext = []
     if getSentenceTense(text) == "past":

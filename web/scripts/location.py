@@ -40,6 +40,7 @@ def get_entities(line):
     return entities
 
 def get_location():
+    
     name = input("Enter your name: ")
     print("Hello", name)
     loc = input("Please input your location: ")
@@ -86,3 +87,4 @@ def get_location():
     return data
 
 print(get_location())
+

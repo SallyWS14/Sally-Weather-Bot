@@ -34,5 +34,7 @@
             "patterns": ["What time is it?", "What is the time?", "What's the time?", "What time is it now?"],
             "responses": ["The current time is...", "It is currently...", "The time is...", "Getting exact time..."]
         }
+
+        
     ]
 }

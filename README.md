@@ -17,4 +17,4 @@ Provides you with accurate weather data on demand.
 - Google News Feed feature will give users the option to select their choice of country, topic, and language to give certain number of feeds. Sally will first detect the word 'news' in the message user provides, and then display a cool dropdown box which will have few options for the feed.
 
 - API used: GoogleTrans, Gclientnews
-- 
+

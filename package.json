@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/SallyWS14/Sally-Weather-Bot#readme",
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.3.16",
+    "@googlemaps/google-maps-services-js": "^3.3.26",
     "clever-bot-api": "^1.5.4",
     "clothes-by-weather": "^1.1.2",
     "discord.js": "^14.6.0",

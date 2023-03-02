@@ -27,7 +27,7 @@
     "http": "^0.0.1-security",
     "https": "^1.0.0",
     "mysql2": "^2.3.3",
-    "openai": "^3.0.1"
+    "openai": "^3.2.1"
   },
   "devDependencies": {
     "eslint": "^8.25.0",
